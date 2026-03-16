@@ -28,4 +28,32 @@ export class AccountDetailsComponent {
       this.loanDetails = data.loanDetailsData;
     });
   }
+
+  getRepaymentFrequencyCatalogKey(): string {
+    const unit: string | undefined = this.loanDetails?.repaymentFrequencyType?.value;
+    const every: number | undefined = this.loanDetails?.repaymentEvery;
+
+    if (!unit) {
+      return '';
+    }
+
+    // If "every 1 X", prefer adjective form (Daily/Weekly/Monthly/Annually).
+    if (every === 1) {
+      switch (unit) {
+        case 'Days':
+          return 'Daily';
+        case 'Weeks':
+          return 'Weekly';
+        case 'Months':
+          return 'Monthly';
+        case 'Years':
+          return 'Annually';
+        default:
+          return unit;
+      }
+    }
+
+    // Otherwise keep plural unit (Days/Weeks/Months/Years).
+    return unit;
+  }
 }

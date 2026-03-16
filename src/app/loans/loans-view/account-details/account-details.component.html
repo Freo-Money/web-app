@@ -9,26 +9,42 @@
 
     <div class="flex-fill layout-row">
       <span class="flex-50">{{ 'labels.inputs.Repayments' | translate }}</span>
-      <span class="flex-50"
-        >{{ loanDetails.numberOfRepayments }} every {{ loanDetails.repaymentEvery }}&nbsp;{{
-          loanDetails.repaymentFrequencyType.value | translateKey: 'catalogs'
-        }}
-        <span
-          *ngIf="
-            loanDetails.repaymentFrequencyType?.id === 2 &&
-            loanDetails.repaymentFrequencyNthDayType?.id !== 0 &&
-            loanDetails.repaymentFrequencyDayOfWeekType?.id !== 0
-          "
-          class="m-l-10"
-        >
-          <span *ngIf="loanDetails.repaymentFrequencyDayOfWeekType">
-            <span class="m-l-10">{{ 'labels.commons.on' | translate }}</span
-            >{{ loanDetails.repaymentFrequencyNthDayType?.value }}
-            <span class="m-l-10">{{
-              loanDetails.repaymentFrequencyDayOfWeekType?.value | translateKey: 'catalogs'
-            }}</span>
-          </span>
-        </span>
+
+      <span class="flex-50">
+        <!-- Monthly (id=2): "4 Monthly on day 5" -->
+        <ng-container *ngIf="loanDetails.repaymentFrequencyType?.id === 2">
+          {{ loanDetails.numberOfRepayments }}
+          {{ 'Monthly' | translateKey: 'catalogs' }}
+          <ng-container *ngIf="loanDetails?.meeting?.repeatsOnDayOfMonth">
+            <span class="m-l-10">
+              {{
+                (loanDetails?.meeting?.repeatsOnNthDayOfMonth?.code === 'nthDayType.onday'
+                  ? 'on day'
+                  : loanDetails?.meeting?.repeatsOnNthDayOfMonth?.value || 'on'
+                ) | lowercase
+              }}
+            </span>
+            <span class="m-l-10">{{ loanDetails.meeting.repeatsOnDayOfMonth }}</span>
+          </ng-container>
+        </ng-container>
+
+        <!-- Daily (id=0): "4 daily" -->
+        <ng-container *ngIf="loanDetails.repaymentFrequencyType?.id === 0">
+          {{ loanDetails.numberOfRepayments }}
+          {{ 'Daily' | translateKey: 'catalogs' | lowercase }}
+        </ng-container>
+
+        <!-- Weekly (id=1): "4 weeks every Thursday" -->
+        <ng-container *ngIf="loanDetails.repaymentFrequencyType?.id === 1">
+          {{ loanDetails.numberOfRepayments }}
+          Weekly
+          <ng-container *ngIf="loanDetails.repaymentFrequencyDayOfWeekType?.value">
+            <span class="m-l-10">on</span>
+            <span class="m-l-10">
+              {{ loanDetails.repaymentFrequencyDayOfWeekType?.value | translateKey: 'catalogs' }}
+            </span>
+          </ng-container>
+        </ng-container>
       </span>
     </div>
 
@@ -167,6 +183,20 @@
     </div>
 
     <div class="flex-fill layout-row">
+      <span class="flex-50"> Initial broken-period interest computation </span>
+      <span class="flex-50">
+        {{ loanDetails.brokenPeriodConfig.brokenPeriodMethodType?.replaceAll('_', ' ') }}
+      </span>
+    </div>
+
+    <div class="flex-fill layout-row" *ngIf="loanDetails.bpiCollectedAtDisbursement">
+      <span class="flex-50"> Initial broken-period interest collect at disbursement </span>
+      <span class="flex-50">
+        {{ loanDetails.bpiCollectedAtDisbursement | yesNo }}
+      </span>
+    </div>
+
+    <div class="flex-fill layout-row">
       <span class="flex-50">{{ 'labels.inputs.Is interest recognition on disbursement date?' | translate }}:</span>
       <span class="flex-50">{{ loanDetails.interestRecognitionOnDisbursementDate | yesNo }}</span>
     </div>
@@ -272,6 +302,21 @@
           loanDetails.maximumGap | formatNumber
         }}&nbsp;{{ 'labels.text.Days' | translate }}
       </span>
+    </div>
+    <div class="flex-fill layout-row">
+      <span class="flex-50"> Broken Period Days in year </span>
+      <span class="flex-50">
+        {{
+          loanDetails.brokenPeriodConfig.brokenPeriodDaysInMonth === 1
+            ? 'Actual'
+            : loanDetails.brokenPeriodConfig.brokenPeriodDaysInMonth
+        }}
+      </span>
+    </div>
+
+    <div class="flex-fill layout-row">
+      <span class="flex-50"> Broken Period Days in month </span>
+      <span class="flex-50"> {{ loanDetails.brokenPeriodConfig.brokenPeriodDaysInYear }} days </span>
     </div>
   </div>
 </div>

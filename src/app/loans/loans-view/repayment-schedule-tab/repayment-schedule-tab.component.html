@@ -36,6 +36,18 @@
       <td mat-footer-cell *matFooterCellDef></td>
     </ng-container>
 
+    <ng-container matColumnDef="emiClearedOn">
+      <th mat-header-cell class="center mat-header-cell" *matHeaderCellDef>
+        {{ 'labels.inputs.EMI Cleared On' | translate }}
+      </th>
+
+      <td mat-cell class="center" *matCellDef="let item" [ngClass]="installmentStyle(item)">
+        {{ item.emiClearedOn | dateFormat }}
+      </td>
+
+      <td mat-footer-cell *matFooterCellDef></td>
+    </ng-container>
+
     <ng-container matColumnDef="check">
       <th mat-header-cell *matHeaderCellDef>&nbsp;</th>
       <td mat-cell class="center" *matCellDef="let item" [ngClass]="installmentStyle(item)">
