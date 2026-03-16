@@ -101,6 +101,18 @@
                       {{ loanDetailsData.totalOverpaid | currency: currency.code : 'symbol-narrow' : '1.2-2' }}
                     </td>
                   </tr>
+                  <tr *ngIf="loanDetailsData.principal">
+                    <td>{{ 'labels.inputs.Disbursed Amount' | translate }}</td>
+                    <td class="r-amount">
+                      {{ loanDetailsData.principal | currency: currency.code : 'symbol-narrow' : '1.2-2' }}
+                    </td>
+                  </tr>
+                  <tr *ngIf="loanDetailsData.netDisbursalAmount">
+                    <td>{{ 'labels.inputs.Net Disbursed Amount' | translate }}</td>
+                    <td class="r-amount">
+                      {{ loanDetailsData.netDisbursalAmount | currency: currency.code : 'symbol-narrow' : '1.2-2' }}
+                    </td>
+                  </tr>
                 </tbody>
               </table>
             </div>
