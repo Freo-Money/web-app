@@ -88,6 +88,7 @@ export class RepaymentScheduleTabComponent implements OnInit, OnChanges {
     'days',
     'date',
     'paiddate',
+    'emiClearedOn',
     'check',
     'balanceOfLoan',
     'principalDue',
@@ -231,7 +232,6 @@ export class RepaymentScheduleTabComponent implements OnInit, OnChanges {
         type: 'number',
         required: true
       })
-
     ];
 
     const data = {
