@@ -191,7 +191,7 @@ export class TransactionsTabComponent implements OnInit {
       transactions = this.transactionsData.filter((t: LoanTransaction) => {
         return (
           !(hideReversed && t.manuallyReversed) &&
-          !(hideAccrual && (t.type.accrual || t.type.capitalizedIncomeAmortization))
+          !(hideAccrual && (this.isAccrual(t.type) || this.isCapitalizedIncomeAmortization(t.type)))
         );
       });
     }
@@ -391,7 +391,12 @@ export class TransactionsTabComponent implements OnInit {
   }
 
   private isAccrual(transactionType: LoanTransactionType): boolean {
-    return transactionType.accrual || transactionType.code === 'loanTransactionType.overdueCharge';
+    return (
+      transactionType.accrual ||
+      transactionType.accrualSuspense ||
+      transactionType.accrualSuspenseReverse ||
+      transactionType.code === 'loanTransactionType.overdueCharge'
+    );
   }
 
   private isChargeOff(transactionType: LoanTransactionType): boolean {
@@ -491,7 +496,6 @@ export class TransactionsTabComponent implements OnInit {
             required: false,
             order: 4
           })
-
         ];
         const data = {
           title: this.translateService.instant('labels.buttons.Create Interest Refund'),
@@ -566,10 +570,10 @@ export class TransactionsTabComponent implements OnInit {
               max: transactionAmount,
               validators: [
                 Validators.min(0.001),
-                Validators.max(transactionAmount)],
+                Validators.max(transactionAmount)
+              ],
               order: 2
             })
-
           ];
           const data = {
             title: `Adjustment ${transaction.type.value} Transaction`,
@@ -642,10 +646,10 @@ export class TransactionsTabComponent implements OnInit {
               max: transactionAmount,
               validators: [
                 Validators.min(0.001),
-                Validators.max(transactionAmount)],
+                Validators.max(transactionAmount)
+              ],
               order: 2
             })
-
           ];
           const data = {
             title: `Adjustment ${transaction.type.value} Transaction`,
