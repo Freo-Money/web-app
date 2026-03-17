@@ -16,6 +16,8 @@ export interface LoanTransactionType {
   waiveInterest: boolean;
   waiveCharges: boolean;
   accrual: boolean;
+  accrualSuspense: boolean;
+  accrualSuspenseReverse: boolean;
   writeOff: boolean;
   recoveryRepayment: boolean;
   initiateTransfer: boolean;
