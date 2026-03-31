@@ -43,11 +43,13 @@
       <th mat-header-cell class="r-amount" *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Due' | translate }}</th>
       <td mat-cell class="r-amount" *matCellDef="let charge">
         {{ charge.amount }}
-        ({{
-          charge.taxAmount && charge.taxAmount.toString().length > 4
-            ? (charge.taxAmount | number: '1.0-0').slice(0, 2)
-            : charge.taxAmount
-        }})
+        <ng-container *ngIf="charge.taxAmount">
+          ({{
+            charge.taxAmount.toString().length > 4
+              ? (charge.taxAmount | number: '1.0-0').slice(0, 2)
+              : charge.taxAmount
+          }})
+        </ng-container>
       </td>
     </ng-container>
 
