@@ -146,9 +146,10 @@ export class TransactionsTabComponent implements OnInit {
 
   ngOnInit() {
     this.transactionsData = this.loanDetailsData.transactions;
-    this.hideAccrualsParam = new UntypedFormControl(false);
-    this.hideReversedParam = new UntypedFormControl(false);
+    this.hideAccrualsParam = new UntypedFormControl(true);
+    this.hideReversedParam = new UntypedFormControl(true);
     this.setLoanTransactions();
+    this.filterTransactions(this.hideReversedParam.value, this.hideAccrualsParam.value);
   }
 
   setLoanTransactions() {
