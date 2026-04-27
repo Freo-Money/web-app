@@ -30,6 +30,7 @@ import { AssetTransferLoanComponent } from './asset-transfer-loan/asset-transfer
 import { LoanReagingComponent } from './loan-reaging/loan-reaging.component';
 import { LoanReamortizeComponent } from './loan-reamortize/loan-reamortize.component';
 import { AddInterestPauseComponent } from './add-interest-pause/add-interest-pause.component';
+import { PayChargesComponent } from 'app/loans/loans-view/loan-account-actions/pay-charges/pay-charges.component';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
@@ -69,7 +70,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     AssetTransferLoanComponent,
     LoanReagingComponent,
     LoanReamortizeComponent,
-    AddInterestPauseComponent
+    AddInterestPauseComponent,
+    PayChargesComponent
   ]
 })
 export class LoanAccountActionsComponent {
@@ -101,6 +103,7 @@ export class LoanAccountActionsComponent {
     'Loan Screen Reports': boolean;
     Approve: boolean;
     'Add Loan Charge': boolean;
+    'Pay Charge': boolean;
     'Goodwill Credit': boolean;
     'Merchant Issued Refund': boolean;
     'Payout Refund': boolean;
@@ -140,6 +143,7 @@ export class LoanAccountActionsComponent {
     'Loan Screen Reports': false,
     Approve: false,
     'Add Loan Charge': false,
+    'Pay Charge': false,
     'Goodwill Credit': false,
     'Merchant Issued Refund': false,
     'Payout Refund': false,

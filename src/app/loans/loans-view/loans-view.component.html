@@ -140,7 +140,7 @@
             <mat-icon matListIcon>
               <fa-icon icon="{{ item.icon }}" size="sm"></fa-icon>
             </mat-icon>
-            <span>{{ 'labels.menus.' + item.name | translate }}</span>
+            <span>{{ getMenuLabel(item.name) }}</span>
           </button>
         </ng-container>
 

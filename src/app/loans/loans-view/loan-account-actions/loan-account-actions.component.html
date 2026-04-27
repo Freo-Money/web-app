@@ -57,6 +57,7 @@
 ></mifosx-loan-screen-reports>
 <mifosx-approve-loan *ngIf="actions['Approve']"></mifosx-approve-loan>
 <mifosx-add-loan-charge *ngIf="actions['Add Loan Charge']"></mifosx-add-loan-charge>
+<mifosx-pay-charges [dataObject]="actionButtonData" *ngIf="actions['Pay Charge']"></mifosx-pay-charges>
 <mifosx-edit-repayment-schedule *ngIf="actions['Edit Repayment Schedule']"></mifosx-edit-repayment-schedule>
 <mifosx-charge-off [dataObject]="actionButtonData" *ngIf="actions['Charge-Off']"></mifosx-charge-off>
 <mifosx-asset-transfer-loan *ngIf="actions['Sell Loan'] || actions['Buy Back Loan']"></mifosx-asset-transfer-loan>
