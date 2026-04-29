@@ -1,35 +1,8 @@
-.search-bar {
-  .search {
-    max-width: 500px;
-    width: 100%;
-    font-size: 1rem;
-    color: white;
-  }
-
-  .resource {
-    max-width: 90px;
-    width: 100%;
-    font-size: 1rem;
-    color: white;
-  }
-}
-
-.search-icon {
-  margin-left: 1rem;
+.search-container {
   display: flex;
   align-items: center;
 }
 
-.mat-mdc-floating-label,
-mat-form-field input {
-  color: white !important;
-  height: 16px;
-  transition: height ease-in-out 400ms;
-}
-
-mat-form-field input:focus {
-  color: white !important;
-  background-color: transparent;
-  height: 16px;
-  transition: height ease-in-out 400ms;
+.search-icon-button {
+  cursor: pointer;
 }

@@ -1,0 +1,74 @@
+.search-dialog-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.dialog-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.25rem 0;
+
+  h2 {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: #333;
+  }
+
+  .close-button {
+    flex-shrink: 0;
+  }
+}
+
+.dialog-content {
+  padding: 0 1.25rem 1.25rem;
+}
+
+.dialog-actions {
+  padding: 0 1.25rem 1.25rem;
+}
+
+.search-bar {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  width: 100%;
+}
+
+.search {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.resource {
+  flex: 0 0 220px;
+  width: 220px;
+}
+
+::ng-deep {
+  .search-dialog-container {
+    .mat-mdc-form-field {
+      width: 100%;
+    }
+  }
+}
+
+@media (width <= 600px) {
+  .dialog-header,
+  .dialog-content {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .search-bar {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .resource {
+    width: 100%;
+    flex-basis: auto;
+  }
+}
