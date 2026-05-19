@@ -339,6 +339,12 @@ export class LoansViewComponent implements OnInit {
     }
   }
 
+  getMenuLabel(actionName: string): string {
+    const translationKey = `labels.menus.${actionName}`;
+    const translatedValue = this.translateService.instant(translationKey);
+    return translatedValue === translationKey ? actionName : translatedValue;
+  }
+
   /**
    * Recover from guarantor action
    */

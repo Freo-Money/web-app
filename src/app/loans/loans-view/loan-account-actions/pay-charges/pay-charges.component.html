@@ -1,0 +1,129 @@
+<div class="container mat-elevation-z8">
+  <mat-card style="width: 100%; box-sizing: border-box">
+    <form [formGroup]="payChargesForm" (ngSubmit)="submit()">
+      <mat-card-content>
+        <div class="layout-column">
+          <mat-form-field (click)="transactionDatePicker.open()">
+            <mat-label>{{ 'labels.inputs.Transaction Date' | translate }}</mat-label>
+            <input
+              matInput
+              [min]="minDate"
+              [max]="maxDate"
+              [matDatepicker]="transactionDatePicker"
+              required
+              formControlName="transactionDate"
+            />
+            <mat-datepicker-toggle matSuffix [for]="transactionDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker #transactionDatePicker></mat-datepicker>
+            <mat-error *ngIf="payChargesForm.controls.transactionDate.hasError('required')">
+              {{ 'labels.inputs.Transaction Date' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>{{ 'labels.inputs.Charge' | translate }}</mat-label>
+            <mat-select required formControlName="chargeId">
+              <mat-option *ngFor="let charge of filteredChargeOptions" [value]="getChargeSelectValue(charge)">
+                {{ charge.name }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="payChargesForm.controls.chargeId.hasError('required')">
+              {{ 'labels.inputs.Charge' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>{{ 'labels.inputs.Transaction Amount' | translate }}</mat-label>
+            <input type="number" matInput required formControlName="transactionAmount" />
+            <mat-hint *ngIf="outstandingAmount !== null">
+              Maximum amount allowed: {{ outstandingAmount | formatNumber }}
+            </mat-hint>
+            <mat-error *ngIf="payChargesForm.controls.transactionAmount.hasError('required')">
+              {{ 'labels.inputs.Transaction Amount' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
+            </mat-error>
+            <mat-error *ngIf="payChargesForm.controls.transactionAmount.hasError('min')">
+              {{ 'labels.inputs.Transaction Amount' | translate }}
+              {{ 'labels.commons.must be greater than' | translate }}
+              <strong>0</strong>
+            </mat-error>
+            <mat-error *ngIf="payChargesForm.controls.transactionAmount.hasError('max')">
+              Amount cannot exceed outstanding: <strong>{{ outstandingAmount | formatNumber }}</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Payment Mode</mat-label>
+            <mat-select formControlName="chargePaymentMode">
+              <mat-option *ngFor="let paymentMode of paymentModes" [value]="paymentMode.id">
+                {{ paymentMode.value }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>{{ 'labels.inputs.Payment Type' | translate }}</mat-label>
+            <mat-select formControlName="paymentTypeId">
+              <mat-option *ngFor="let paymentType of paymentTypes" [value]="paymentType.id">
+                {{ paymentType.name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <div class="flex-fill">
+            <span class="expandcollapsebutton m-l-10 m-t-40 flex-75" (click)="addPaymentDetails()">
+              <mat-slide-toggle>
+                <div [className]="showPaymentDetails ? 'enabled' : 'disabled'">
+                  <span class="m-l-10">{{ 'labels.inputs.Show Payment Details' | translate }}</span>
+                </div>
+              </mat-slide-toggle>
+            </span>
+          </div>
+
+          <ng-container *ngIf="showPaymentDetails">
+            <mat-form-field>
+              <mat-label> {{ 'labels.inputs.Account' | translate }} #</mat-label>
+              <input matInput formControlName="accountNumber" />
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label> {{ 'labels.inputs.Cheque' | translate }} #</mat-label>
+              <input matInput formControlName="checkNumber" />
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label> {{ 'labels.inputs.Routing Code' | translate }}</mat-label>
+              <input matInput formControlName="routingCode" />
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label> {{ 'labels.inputs.Reciept' | translate }} #</mat-label>
+              <input matInput formControlName="receiptNumber" />
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label> {{ 'labels.inputs.Bank' | translate }} #</mat-label>
+              <input matInput formControlName="bankNumber" />
+            </mat-form-field>
+          </ng-container>
+
+          <mat-form-field>
+            <mat-label> {{ 'labels.inputs.Note' | translate }}</mat-label>
+            <textarea matInput formControlName="note" cdkTextareaAutosize cdkAutosizeMinRows="2"></textarea>
+          </mat-form-field>
+        </div>
+
+        <mat-card-actions class="layout-row align-center gap-5px responsive-column">
+          <button type="button" mat-raised-button [routerLink]="['../../general']">
+            {{ 'labels.buttons.Cancel' | translate }}
+          </button>
+          <button mat-raised-button color="primary" [disabled]="!payChargesForm.valid">
+            {{ 'labels.buttons.Submit' | translate }}
+          </button>
+        </mat-card-actions>
+      </mat-card-content>
+    </form>
+  </mat-card>
+</div>
