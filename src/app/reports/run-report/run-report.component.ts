@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { UntypedFormControl, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 
 /** Custom Services */
@@ -16,7 +16,6 @@ import { GlobalConfiguration } from 'app/system/configurations/global-configurat
 import * as ExcelJS from 'exceljs';
 import { AlertService } from 'app/core/alert/alert.service';
 import { NgIf, NgFor, NgSwitch, NgSwitchCase } from '@angular/common';
-import { MatCheckbox } from '@angular/material/checkbox';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { TableAndSmsComponent } from './table-and-sms/table-and-sms.component';
 import { ChartComponent } from './chart/chart.component';
@@ -34,7 +33,6 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     ...STANDALONE_SHARED_IMPORTS,
     NgSwitch,
     NgSwitchCase,
-    MatCheckbox,
     FaIconComponent,
     TableAndSmsComponent,
     ChartComponent,
@@ -79,16 +77,19 @@ export class RunReportComponent implements OnInit {
   outputTypeOptions: any[] = [];
 
   isProcessing = false;
+  isRedirecting = false;
 
   /**
    * Fetches report specifications from route params and retrieves report parameters data from `resolve`.
    * @param {ActivatedRoute} route ActivatedRoute.
+   * @param {Router} router Router.
    * @param {ReportsService} reportsService ReportsService
    * @param {SettingsService} settingsService Settings Service
    * @param {Dates} dateUtils Date Utils
    */
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private reportsService: ReportsService,
     private settingsService: SettingsService,
     private alertService: AlertService,
@@ -99,6 +100,21 @@ export class RunReportComponent implements OnInit {
       this.report.type = queryParams.type;
       this.report.id = queryParams.id;
     });
+  }
+
+  isTableReport(): boolean {
+    return this.report.type === 'Table';
+  }
+
+  isPentahoReport(): boolean {
+    return this.report.type === 'Pentaho';
+  }
+
+  /**
+   * Creates and sets the run report form.
+   */
+  ngOnInit() {
+    this.maxDate = this.settingsService.maxAllowedDate;
     this.route.data.subscribe((data: { reportParameters: ReportParameter[]; configurations: any }) => {
       this.paramData = data.reportParameters;
       if (this.isTableReport()) {
@@ -120,23 +136,8 @@ export class RunReportComponent implements OnInit {
           this.exportToS3Repository = reportExportS3Config.stringValue;
         }
       }
+      this.createRunReportForm();
     });
-  }
-
-  isTableReport(): boolean {
-    return this.report.type === 'Table';
-  }
-
-  isPentahoReport(): boolean {
-    return this.report.type === 'Pentaho';
-  }
-
-  /**
-   * Creates and sets the run report form.
-   */
-  ngOnInit() {
-    this.maxDate = this.settingsService.maxAllowedDate;
-    this.createRunReportForm();
   }
 
   /**
@@ -170,9 +171,6 @@ export class RunReportComponent implements OnInit {
         { name: 'CSV format', value: 'CSV' }
       ];
       this.mapPentahoParams();
-    }
-    if (this.exportToS3Allowed) {
-      this.reportForm.addControl('exportOutputToS3', new UntypedFormControl(false));
     }
     this.decimalChoice.patchValue('0');
     this.setChildControls();
@@ -326,6 +324,76 @@ export class RunReportComponent implements OnInit {
         this.hidePentaho = false;
         break;
     }
+  }
+
+  runAndUploadS3(): void {
+    this.isProcessing = true;
+    const formData = this.buildRunPayload(true);
+
+    this.reportsService.runAsyncReport(this.report.name, formData).subscribe({
+      next: (response: any) => {
+        this.isProcessing = false;
+        this.isRedirecting = true;
+
+        this.alertService.alert({
+          type: 'Report generation',
+
+          message: 'Report request submitted successfully. Redirecting to My Reports...'
+        });
+
+        this.router.navigateByUrl('/reports/my-reports');
+      },
+      error: (error: any) => {
+        this.isProcessing = false;
+        console.error('Error in runAndUploadS3:', error);
+
+        let errorMessage = 'An error occurred while processing your request.';
+
+        // Extract error message from different error formats
+        if (error?.error?.defaultUserMessage) {
+          errorMessage = error.error.defaultUserMessage;
+        } else if (error?.error?.message) {
+          errorMessage = error.error.message;
+        } else if (error?.error && typeof error.error === 'string') {
+          errorMessage = error.error;
+        } else if (error?.message) {
+          errorMessage = error.message;
+        } else if (error?.statusText) {
+          errorMessage = error.statusText;
+        } else if (error?.status) {
+          errorMessage = `HTTP Error ${error.status}: ${error.statusText || 'Request failed'}`;
+        }
+
+        this.alertService.alert({
+          type: 'Error',
+          message: errorMessage
+        });
+      }
+    });
+  }
+
+  private buildRunPayload(exportS3 = false): any {
+    const userResponseValues = this.formatUserResponse(this.reportForm.value);
+    let formData = {
+      ...userResponseValues
+    };
+    if (this.reportUsesDates) {
+      let dateFormat = this.settingsService.dateFormat;
+      if (this.isTableReport()) {
+        dateFormat = Dates.DEFAULT_DATEFORMAT;
+      }
+      formData = {
+        ...userResponseValues,
+        locale: this.settingsService.language.code,
+        dateFormat: dateFormat
+      };
+    }
+    if (exportS3) {
+      formData['exportS3'] = true;
+    }
+    formData['decimalChoice'] = this.decimalChoice.value;
+
+    return formData;
   }
 
   runReportAndExport($event: Event): void {

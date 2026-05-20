@@ -7,6 +7,7 @@ import { Route } from '../core/route/route.service';
 
 /** Custom Components */
 import { ReportsComponent } from './reports.component';
+import { MyReportsComponent } from './my-reports/my-reports.component';
 import { RunReportComponent } from './run-report/run-report.component';
 
 /** Custom Resolvers */
@@ -30,6 +31,11 @@ const routes: Routes = [
           component: ReportsComponent
         },
         {
+          path: 'my-reports',
+          data: { title: 'My Reports', breadcrumb: 'My Reports' },
+          component: MyReportsComponent
+        },
+        {
           path: ':filter',
           data: { routeParamBreadcrumb: 'filter' },
           component: ReportsComponent
@@ -46,7 +52,6 @@ const routes: Routes = [
       ]
     }
   ])
-
 ];
 
 /**

@@ -1,0 +1,64 @@
+<div class="container">
+  <mat-card>
+    <mat-card-content>
+      <div class="header-row">
+        <h2>My Reports</h2>
+        <button mat-raised-button color="primary" (click)="loadReports()">Refresh</button>
+      </div>
+
+      <div class="empty-state" *ngIf="isLoading">Loading reports...</div>
+
+      <div class="table-wrapper">
+        <table mat-table [dataSource]="dataSource" matSort>
+          <ng-container matColumnDef="reportName">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Report Name' | translate }}</th>
+            <td mat-cell *matCellDef="let report">{{ report.reportName }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Status' | translate }}</th>
+            <td mat-cell *matCellDef="let report">{{ report.status }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="message">
+            <th mat-header-cell *matHeaderCellDef>Message</th>
+            <td mat-cell *matCellDef="let report">
+              <button
+                *ngIf="hasMessage(report.message)"
+                mat-icon-button
+                class="message-button"
+                matTooltip="View message"
+                matTooltipPosition="right"
+                (click)="showMessage(report)"
+              >
+                <span class="message-button-mark">!</span>
+              </button>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="download">
+            <th mat-header-cell *matHeaderCellDef>Action</th>
+            <td mat-cell *matCellDef="let report">
+              <button
+                mat-icon-button
+                class="action-button"
+                matTooltip="Download"
+                [disabled]="!isCompleted(report.status) || downloadingReportId === report.id"
+                (click)="downloadReport(report)"
+              >
+                <fa-icon [icon]="downloadingReportId === report.id ? 'spinner' : 'cloud-download-alt'"></fa-icon>
+              </button>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+
+        <div class="empty-state" *ngIf="!dataSource.data.length">No reports found.</div>
+
+        <mat-paginator [pageSize]="10" [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
