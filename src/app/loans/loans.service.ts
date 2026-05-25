@@ -531,6 +531,17 @@ export class LoansService {
   }
 
   /**
+   * Bulk waive charges for a loan account
+   * @param {string} accountId Loans Account Id
+   * @param {any} data Data with charge ids to waive
+   * @returns {Observable<any>}
+   */
+  bulkWaiveLoansAccountCharges(accountId: string, data: any): Observable<any> {
+    const httpParams = new HttpParams().set('command', 'bulkWaive');
+    return this.http.post(`/loans/${accountId}/charges`, data, { params: httpParams });
+  }
+
+  /**
    * @param {string} loanId Loans Account Id
    * @param {string} command Schedule command
    * @returns {Observable<any>}
