@@ -391,6 +391,7 @@
       "Create Template": "Create Template",
       "Create User": "Create User",
       "Create more": "Create more",
+      "Charge Waiveoff": "Charge Waiveoff",
       "Dashboard": "Dashboard",
       "Day": "Day",
       "Deactivate": "Deactivate",
@@ -525,7 +526,7 @@
       "View Standing Instructions": "View Standing Instructions",
       "View Transactions History": "View Transactions History",
       "Waive": "Waive",
-      "Waive Charge": "Waive Charge",
+      "Waive Selected Charges": "Waive Selected Charges",
       "Week": "Week",
       "Withdraw": "Withdraw",
       "View Active Charges": "View Active Charges",
@@ -855,6 +856,7 @@
       "Charges": "Charges",
       "Charges Overview": "Charges Overview",
       "Chart of Accounts": "Chart of Accounts",
+      "Waive Charges": "Waive Charges",
       "Client": "Client",
       "Client Collateral Details": "Client Collateral Details",
       "Client Members": "Client Members",
@@ -2664,6 +2666,8 @@
       "Withdrawn": "Withdrawn"
     },
     "dialogContext": {
+      "Are you sure you want to waive charge with id ": "Are you sure you want to waive charge with id ",
+      "Are you sure you want to waive": "Are you sure you want to waive ",
       "Are you sure you want Unassign Staff": "Are you sure you want Unassign Staff",
       "Are you sure you want to calculate interest ?": "Are you sure you want to calculate interest ?",
       "Are you sure you want to post interest ?": "Are you sure you want to post interest ?",

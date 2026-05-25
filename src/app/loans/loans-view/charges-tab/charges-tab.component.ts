@@ -17,6 +17,7 @@ import {
   MatRowDef,
   MatRow
 } from '@angular/material/table';
+import { SelectionModel } from '@angular/cdk/collections';
 
 /** Custom Services */
 import { LoansService } from 'app/loans/loans.service';
@@ -37,6 +38,8 @@ import { GlobalConfiguration } from 'app/system/configurations/global-configurat
 import { TranslateService } from '@ngx-translate/core';
 import { NgIf, CurrencyPipe } from '@angular/common';
 import { MatTooltip } from '@angular/material/tooltip';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { MatButton } from '@angular/material/button';
 import { DateFormatPipe } from '../../../pipes/date-format.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
@@ -60,6 +63,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatRowDef,
     MatRow,
     MatPaginator,
+    MatCheckbox,
+    MatButton,
     CurrencyPipe,
     DateFormatPipe
   ]
@@ -73,6 +78,7 @@ export class ChargesTabComponent implements OnInit {
   status: any;
   /** Columns to be displayed in charges table. */
   displayedColumns: string[] = [
+    'select',
     'name',
     'feepenalty',
     'paymentdueat',
@@ -86,6 +92,8 @@ export class ChargesTabComponent implements OnInit {
   ];
   /** Data source for charges table. */
   dataSource: MatTableDataSource<any>;
+  /** Initialize Selection */
+  selection = new SelectionModel<any>(true, []);
 
   useDueDate = true;
 
@@ -141,6 +149,60 @@ export class ChargesTabComponent implements OnInit {
     this.dataSource = new MatTableDataSource(this.chargesData);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+    this.selection.clear();
+  }
+
+  /**
+   * Whether the number of selected elements matches the total number of rows.
+   */
+  isAllSelected(): boolean {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.dataSource.data.length;
+    return numSelected === numRows;
+  }
+
+  /**
+   * Selects all rows if they are not all selected; otherwise clear selection.
+   */
+  masterToggle() {
+    this.isAllSelected() ? this.selection.clear() : this.dataSource.data.forEach((row) => this.selection.select(row));
+  }
+
+  /**
+   * Check if any charge is selected
+   */
+  isAnyChargeSelected(): boolean {
+    return this.selection.selected.length > 0;
+  }
+
+  /**
+   * Waiveoff all selected charges
+   */
+  waiveoffSelectedCharges() {
+    if (this.selection.selected.length === 0) {
+      return;
+    }
+    const selectedChargeIds = this.selection.selected.map((charge) => charge.id);
+    const waiveoffDialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      data: {
+        heading: this.translateService.instant('labels.heading.Waive Charges'),
+        dialogContext:
+          this.translateService.instant('labels.dialogContext.Are you sure you want to waive') +
+          ` ${selectedChargeIds.length} ` +
+          this.translateService.instant('labels.heading.Charges'),
+        type: 'Basic'
+      }
+    });
+    waiveoffDialogRef.afterClosed().subscribe((response: any) => {
+      if (response.confirm) {
+        const payload = {
+          chargeIds: selectedChargeIds
+        };
+        this.loansService.bulkWaiveLoansAccountCharges(this.loanDetails.id, payload).subscribe(() => {
+          this.reload();
+        });
+      }
+    });
   }
 
   /**
@@ -164,7 +226,6 @@ export class ChargesTabComponent implements OnInit {
         type: 'date',
         required: true
       })
-
     ];
     const data = {
       title: `Pay Charge ${chargeId}`,
@@ -200,8 +261,8 @@ export class ChargesTabComponent implements OnInit {
       data: {
         heading: this.translateService.instant('labels.heading.Waive Charge'),
         dialogContext:
-          this.translateService.instant('labels.dialogContext.Are you sure you want to waive charge with id') +
-          `${chargeId} ?`,
+          this.translateService.instant('labels.dialogContext.Are you sure you want to waive charge with id ') +
+          `${chargeId} `,
         type: 'Basic'
       }
     });
@@ -229,7 +290,6 @@ export class ChargesTabComponent implements OnInit {
         type: 'number',
         required: true
       })
-
     ];
     const data = {
       title: `Edit Charge ${charge.id}`,
