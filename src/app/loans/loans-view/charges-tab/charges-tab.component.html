@@ -1,7 +1,13 @@
 <div class="tab-container">
-  <div class="space-top layout-row gap-10px" style="justify-content: flex-end">
-    <button mat-raised-button color="primary" (click)="waiveoffSelectedCharges()" [disabled]="!isAnyChargeSelected()">
-      <i class="fa fa-flag m-r-10"></i>
+  <div class="space-top layout-row gap-10px" style="justify-content: flex-end; margin-bottom: 16px">
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="waiveoffSelectedCharges()"
+      [disabled]="!isAnyChargeSelected()"
+      matTooltip="{{ 'tooltips.Bulk Waive Charges' | translate }}"
+    >
+      <fa-icon icon="trash" class="m-r-10"></fa-icon>
       {{ 'labels.buttons.Waive Selected Charges' | translate }}
     </button>
   </div>
@@ -20,6 +26,7 @@
       <td mat-cell *matCellDef="let row">
         <mat-checkbox
           class="m-r-10"
+          [disabled]="isChargeDisabled(row)"
           (click)="$event.stopPropagation()"
           (change)="$event ? selection.toggle(row) : null"
           [checked]="selection.isSelected(row)"

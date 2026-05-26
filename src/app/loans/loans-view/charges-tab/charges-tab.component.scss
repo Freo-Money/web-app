@@ -20,5 +20,14 @@
     .select-row:hover {
       cursor: pointer;
     }
+
+    // Style for disabled checkboxes
+    ::ng-deep .mat-checkbox-disabled {
+      opacity: 0.5;
+
+      .mat-checkbox-inner-container {
+        opacity: 0.6;
+      }
+    }
   }
 }
