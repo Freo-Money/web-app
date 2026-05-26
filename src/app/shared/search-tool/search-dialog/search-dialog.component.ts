@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, ViewChild, AfterViewInit, ElementRef } from '@angular/core';
 import { UntypedFormControl } from '@angular/forms';
 import {
   MAT_DIALOG_DATA,
@@ -30,7 +30,7 @@ import { DEFAULT_SEARCH_RESOURCE, SEARCH_RESOURCE_OPTIONS } from '../search-tool
     MatIconButton
   ]
 })
-export class SearchDialogComponent {
+export class SearchDialogComponent implements AfterViewInit {
   /** Query Form Control */
   query = new UntypedFormControl('');
   /** Resource Form Control */
@@ -38,6 +38,9 @@ export class SearchDialogComponent {
 
   /** Resource Options */
   resourceOptions = SEARCH_RESOURCE_OPTIONS;
+
+  /** Reference to search input */
+  @ViewChild('searchInput', { read: ElementRef }) searchInput: ElementRef;
 
   /**
    * @param {MatDialogRef} dialogRef Dialog Reference
@@ -57,6 +60,19 @@ export class SearchDialogComponent {
     if (data?.resource) {
       this.resource.patchValue(data.resource);
     }
+  }
+
+  /**
+   * Focus on search input after view initialization
+   */
+  ngAfterViewInit(): void {
+    // Use a longer timeout to wait for dialog animation to complete
+    setTimeout(() => {
+      if (this.searchInput && this.searchInput.nativeElement) {
+        this.searchInput.nativeElement.focus();
+        this.searchInput.nativeElement.select();
+      }
+    }, 300);
   }
 
   /**

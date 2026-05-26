@@ -12,4 +12,4 @@ export const SEARCH_RESOURCE_OPTIONS: SearchResourceOption[] = [
   { name: 'Shares', value: 'shares' }
 ];
 
-export const DEFAULT_SEARCH_RESOURCE = SEARCH_RESOURCE_OPTIONS[0].value;
+export const DEFAULT_SEARCH_RESOURCE = SEARCH_RESOURCE_OPTIONS[1].value;
