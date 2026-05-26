@@ -6,9 +6,47 @@
     margin: 1% auto;
   }
 
+  .space-top {
+    margin-bottom: 16px;
+  }
+
+  // Wrapper for horizontal scroll - prevents overflow
+  .mat-table-wrapper {
+    overflow: auto visible;
+    width: 100%;
+    max-width: 100%;
+  }
+
   table {
     width: 100%;
     margin-top: 3%;
+    border-collapse: collapse;
+    table-layout: auto;
+
+    // Fixed width for select checkbox column - prevents expansion
+    [mat-header-cell][matcolumndef='select'],
+    [mat-cell][matcolumndef='select'] {
+      width: 60px;
+      min-width: 60px;
+      max-width: 60px;
+      text-align: center;
+      padding: 8px 4px !important;
+      flex: 0 0 60px !important;
+    }
+
+    // Ensure all header and data cells have proper padding
+    [mat-header-cell],
+    [mat-cell] {
+      padding: 8px 12px !important;
+      word-break: break-word;
+      overflow-wrap: break-word;
+    }
+
+    // Right-aligned columns for amounts
+    .r-amount {
+      text-align: right !important;
+      white-space: nowrap;
+    }
 
     .account-action-button {
       min-width: 26px;
