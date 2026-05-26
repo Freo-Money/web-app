@@ -42,6 +42,8 @@ import { MatCheckbox } from '@angular/material/checkbox';
 import { MatButton } from '@angular/material/button';
 import { DateFormatPipe } from '../../../pipes/date-format.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'mifosx-charges-tab',
@@ -65,6 +67,7 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatPaginator,
     MatCheckbox,
     MatButton,
+    FaIconComponent,
     CurrencyPipe,
     DateFormatPipe
   ]
@@ -153,19 +156,22 @@ export class ChargesTabComponent implements OnInit {
   }
 
   /**
-   * Whether the number of selected elements matches the total number of rows.
+   * Whether the number of selected elements matches the total number of selectable rows.
    */
   isAllSelected(): boolean {
+    const selectableCharges = this.dataSource.data.filter((charge: any) => !this.isChargeDisabled(charge));
     const numSelected = this.selection.selected.length;
-    const numRows = this.dataSource.data.length;
-    return numSelected === numRows;
+    return numSelected === selectableCharges.length && selectableCharges.length > 0;
   }
 
   /**
-   * Selects all rows if they are not all selected; otherwise clear selection.
+   * Selects all selectable rows if they are not all selected; otherwise clear selection.
    */
-  masterToggle() {
-    this.isAllSelected() ? this.selection.clear() : this.dataSource.data.forEach((row) => this.selection.select(row));
+  masterToggle(): void {
+    const selectableCharges = this.dataSource.data.filter((charge: any) => !this.isChargeDisabled(charge));
+    this.isAllSelected()
+      ? this.selection.clear()
+      : selectableCharges.forEach((charge: any) => this.selection.select(charge));
   }
 
   /**
@@ -173,6 +179,15 @@ export class ChargesTabComponent implements OnInit {
    */
   isAnyChargeSelected(): boolean {
     return this.selection.selected.length > 0;
+  }
+
+  /**
+   * Check if a charge should be disabled for selection
+   * @param {any} charge Charge object
+   * @returns {boolean} True if charge should be disabled
+   */
+  isChargeDisabled(charge: any): boolean {
+    return charge.paid || charge.waived || charge.chargeTimeType.id === '1' || charge.amountOutstanding === 0;
   }
 
   /**
