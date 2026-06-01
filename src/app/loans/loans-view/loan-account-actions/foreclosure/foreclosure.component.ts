@@ -96,7 +96,8 @@ export class ForeclosureComponent implements OnInit {
         outstandingInterestPortion: this.foreclosuredata.interestPortion,
         adjustedInterestPortion: this.foreclosuredata.adjustedInterestPortion,
         outstandingFeeChargesPortion: this.foreclosuredata.feeChargesPortion,
-        outstandingPenaltyChargesPortion: this.foreclosuredata.penaltyChargesPortion
+        outstandingPenaltyChargesPortion: this.foreclosuredata.penaltyChargesPortion,
+        transactionAmount: this.foreclosuredata.amount
       });
     });
   }
