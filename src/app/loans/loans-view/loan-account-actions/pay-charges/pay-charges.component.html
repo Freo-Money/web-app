@@ -72,6 +72,11 @@
             </mat-select>
           </mat-form-field>
 
+          <mat-form-field>
+            <mat-label>{{ 'labels.inputs.External Id' | translate }}</mat-label>
+            <input matInput formControlName="externalId" />
+          </mat-form-field>
+
           <div class="flex-fill">
             <span class="expandcollapsebutton m-l-10 m-t-40 flex-75" (click)="addPaymentDetails()">
               <mat-slide-toggle>

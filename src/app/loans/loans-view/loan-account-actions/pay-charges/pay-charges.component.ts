@@ -336,6 +336,7 @@ export class PayChargesComponent implements OnInit, OnChanges {
           Validators.min(0.001)]
       ],
       paymentTypeId: '',
+      externalId: '',
       note: ''
     });
   }
@@ -386,6 +387,9 @@ export class PayChargesComponent implements OnInit, OnChanges {
         : selectedChargePaymentModeId;
     if (payChargesFormData.paymentTypeId !== '' && payChargesFormData.paymentTypeId !== null) {
       data.paymentTypeId = payChargesFormData.paymentTypeId;
+    }
+    if (payChargesFormData.externalId !== '' && payChargesFormData.externalId !== null) {
+      data.externalId = payChargesFormData.externalId;
     }
     if (payChargesFormData.accountNumber) {
       data.accountNumber = payChargesFormData.accountNumber;
