@@ -30,7 +30,8 @@ export class AccountNumberComponent implements OnInit {
     this.displayR = this.display === 'right';
   }
 
-  copyValue(): void {
+  copyValue(event?: Event): void {
+    event?.stopPropagation();
     this.clipboard.copy(this.accountNo);
   }
 
