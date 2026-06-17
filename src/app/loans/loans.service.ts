@@ -28,9 +28,13 @@ export class LoansService {
     return this.http.get(`/loans/${loanId}/charges/template`);
   }
 
-  getLoanChargePaymentTemplate(loanId: string): Observable<any> {
+  getLoanChargePaymentTemplate(loanId: string, asOnDate?: string | Date): Observable<any> {
+    const formattedAsOnDate =
+      asOnDate instanceof Date
+        ? this.dateUtils.formatDate(asOnDate, this.settingsService.dateFormat)
+        : asOnDate || this.dateUtils.formatDate(this.settingsService.businessDate, this.settingsService.dateFormat);
     const httpParams = new HttpParams()
-      .set('asOnDate', this.dateUtils.formatDate(this.settingsService.businessDate, this.settingsService.dateFormat))
+      .set('asOnDate', formattedAsOnDate)
       .set('locale', this.settingsService.language.code)
       .set('dateFormat', this.settingsService.dateFormat);
     return this.http.get(`/loans/${loanId}/charge-payment/template`, { params: httpParams });
@@ -40,8 +44,18 @@ export class LoansService {
     return this.http.post(`/loans/${loanId}/charge-payment/${chargeId}`, data);
   }
 
-  getLoanActionTemplate(loanId: string, command: string): Observable<any> {
-    const httpParams = new HttpParams().set('command', command);
+  getLoanActionTemplate(loanId: string, command: string, transactionDate?: string | Date): Observable<any> {
+    let httpParams = new HttpParams().set('command', command);
+    if (transactionDate) {
+      const formattedTransactionDate =
+        transactionDate instanceof Date
+          ? this.dateUtils.formatDate(transactionDate, this.settingsService.dateFormat)
+          : transactionDate;
+      httpParams = httpParams
+        .set('transactionDate', formattedTransactionDate)
+        .set('locale', this.settingsService.language.code)
+        .set('dateFormat', this.settingsService.dateFormat);
+    }
     return this.http.get(`/loans/${loanId}/transactions/template`, { params: httpParams });
   }
 

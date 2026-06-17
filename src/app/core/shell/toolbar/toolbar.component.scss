@@ -1,5 +1,9 @@
 #mifosx-toolbar {
-  position: relative;
+  position: sticky;
+  top: 0;
+  // Stay above sticky table headers (Angular Material gives those z-index: 100)
+  // so a frozen column header can never paint over the toolbar.
+  z-index: 1000;
   box-shadow:
     0 3px 1px -2px rgb(0 0 0 / 20%),
     0 2px 2px 0 rgb(0 0 0 / 14%),

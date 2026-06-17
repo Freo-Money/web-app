@@ -10,11 +10,13 @@
     margin-bottom: 16px;
   }
 
-  // Wrapper for horizontal scroll - prevents overflow
+  // Wrapper for horizontal + vertical scroll so the sticky header has a
+  // bounded scroll container to pin against while rows scroll underneath.
   .mat-table-wrapper {
-    overflow: auto visible;
+    overflow: auto;
     width: 100%;
     max-width: 100%;
+    max-height: 70vh;
   }
 
   table {
@@ -40,6 +42,12 @@
       padding: 8px 12px !important;
       word-break: break-word;
       overflow-wrap: break-word;
+    }
+
+    // Keep the frozen column header opaque (theme-aware) so data rows don't
+    // show through it while scrolling underneath.
+    [mat-header-cell] {
+      background: var(--mat-table-background-color, #fff);
     }
 
     // Right-aligned columns for amounts
