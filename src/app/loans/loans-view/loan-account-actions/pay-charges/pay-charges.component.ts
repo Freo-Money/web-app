@@ -78,7 +78,26 @@ export class PayChargesComponent implements OnInit, OnChanges {
       this.updateFilteredChargeOptions(selectedPaymentModeId);
     });
 
+    this.payChargesForm.controls.transactionDate.valueChanges.subscribe((transactionDate) => {
+      this.reloadTemplateForDate(transactionDate);
+    });
+
     this.initializeTemplateData();
+  }
+
+  /**
+   * Re-fetches the charge-payment template for the selected date so the
+   * charge data (e.g. outstanding amounts) reflects that date.
+   */
+  reloadTemplateForDate(transactionDate: Date | string): void {
+    if (!transactionDate) {
+      return;
+    }
+
+    this.loansService.getLoanChargePaymentTemplate(this.loanId, transactionDate).subscribe((dataObject: any) => {
+      this.dataObject = dataObject;
+      this.initializeTemplateData();
+    });
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -257,7 +276,8 @@ export class PayChargesComponent implements OnInit, OnChanges {
     const amountControl = this.payChargesForm.controls.transactionAmount;
     const validators = [
       Validators.required,
-      Validators.min(0.001)];
+      Validators.min(0.001)
+    ];
     if (this.outstandingAmount !== null) {
       validators.push(Validators.max(this.outstandingAmount));
     }
@@ -333,7 +353,8 @@ export class PayChargesComponent implements OnInit, OnChanges {
         '',
         [
           Validators.required,
-          Validators.min(0.001)]
+          Validators.min(0.001)
+        ]
       ],
       paymentTypeId: '',
       externalId: '',

@@ -77,6 +77,28 @@ export class MakeRepaymentComponent implements OnInit {
     if (this.dataObject.currency) {
       this.currency = this.dataObject.currency;
     }
+
+    this.repaymentLoanForm.controls.transactionDate.valueChanges.subscribe((transactionDate) => {
+      this.reloadTemplateForDate(transactionDate);
+    });
+  }
+
+  /**
+   * Re-fetches the transaction template for the selected date so the
+   * repayment data (e.g. the due amount) reflects that date.
+   */
+  reloadTemplateForDate(transactionDate: Date | string): void {
+    if (!transactionDate) {
+      return;
+    }
+
+    this.loanService.getLoanActionTemplate(this.loanId, this.command, transactionDate).subscribe((dataObject: any) => {
+      this.dataObject = dataObject;
+      this.setRepaymentLoanDetails();
+      if (this.dataObject.currency) {
+        this.currency = this.dataObject.currency;
+      }
+    });
   }
 
   /**
@@ -100,14 +122,16 @@ export class MakeRepaymentComponent implements OnInit {
         new UntypedFormControl('', [
           Validators.required,
           Validators.min(0.001),
-          Validators.max(this.dataObject.amount)])
+          Validators.max(this.dataObject.amount)
+        ])
       );
     } else {
       this.repaymentLoanForm.addControl(
         'transactionAmount',
         new UntypedFormControl('', [
           Validators.required,
-          Validators.min(0.001)])
+          Validators.min(0.001)
+        ])
       );
     }
   }

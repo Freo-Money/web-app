@@ -220,9 +220,9 @@
 
     <tr
       mat-header-row
-      *matHeaderRowDef="['header', 'header-amount', 'header-total-cost', 'header-installment-totals']"
+      *matHeaderRowDef="['header', 'header-amount', 'header-total-cost', 'header-installment-totals']; sticky: true"
     ></tr>
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns" class="table-row"></tr>
     <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr>
   </table>
