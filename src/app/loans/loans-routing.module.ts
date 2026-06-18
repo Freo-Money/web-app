@@ -29,6 +29,7 @@ import { ExportTransactionsComponent } from './loans-view/transactions/export-tr
 import { GlimAccountComponent } from './glim-account/glim-account.component';
 import { CreateGlimAccountComponent } from './glim-account/create-glim-account/create-glim-account.component';
 import { LoanBuyDownFeesTabComponent } from './loans-view/loan-buy-down-fees-tab/loan-buy-down-fees-tab.component';
+import { LoanAccountsListComponent } from './loan-accounts-list/loan-accounts-list.component';
 
 /** Custom Resolvers */
 import { LoanDetailsResolver } from './common-resolvers/loan-details.resolver';
@@ -66,6 +67,7 @@ import { LoanTermVariationsResolver } from './common-resolvers/loan-term-variati
 import { LoanDeferredIncomeTabComponent } from './loans-view/loan-deferred-income-tab/loan-deferred-income-tab.component';
 import { LoanDeferredIncomeDataResolver } from './common-resolvers/loan-deferred-income-data.resolver';
 import { LoanBuyDownFeesDataResolver } from './common-resolvers/loan-buy-down-fees-data.resolver';
+import { LoanAccountsListResolver } from './common-resolvers/loan-accounts-list.resolver';
 
 /** Loans Route. */
 const routes: Routes = [
@@ -73,6 +75,19 @@ const routes: Routes = [
     path: '',
     data: { title: 'Loans', breadcrumb: 'Loans', routeParamBreadcrumb: false },
     children: [
+      {
+        path: '',
+        pathMatch: 'full',
+        redirectTo: 'general'
+      },
+      {
+        path: 'general',
+        component: LoanAccountsListComponent,
+        data: { title: 'Loans', breadcrumb: '', routeParamBreadcrumb: false },
+        resolve: {
+          accountsData: LoanAccountsListResolver
+        }
+      },
       {
         path: 'create',
         data: { title: 'Create Loans Account', breadcrumb: 'Create Loans Account' },
