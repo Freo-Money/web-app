@@ -41,6 +41,16 @@
                 }}<span class="m-l-5">({{ loanDetailsData.clientAccountNo || loanDetailsData.group.accountNo }})</span
                 ><br />
               </span>
+              <span class="loans-overview">
+                <span class="m-r-10">{{ 'labels.inputs.External Id' | translate }} :</span>
+                <mifosx-external-identifier
+                  *ngIf="loanDetailsData.externalId"
+                  externalId="{{ loanDetailsData.externalId }}"
+                  completed="true"
+                ></mifosx-external-identifier>
+                <span *ngIf="!loanDetailsData.externalId">{{ 'labels.inputs.Not Available' | translate }}</span>
+                <br />
+              </span>
               <div *ngIf="loanDisplayArrearsDelinquency !== 1">
                 <table class="account-overview">
                   <tbody>
