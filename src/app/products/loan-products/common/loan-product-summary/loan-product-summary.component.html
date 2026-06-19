@@ -56,12 +56,12 @@
 
   <div class="flex-fill layout-row">
     <span class="flex-40">{{ 'labels.inputs.Decimal Places' | translate }}:</span>
-    <span class="flex-60">{{ loanProduct.currency.decimalPlaces }}</span>
+    <span class="flex-60">{{ loanProduct.digitsAfterDecimal ?? loanProduct.currency.decimalPlaces }}</span>
   </div>
 
   <div class="flex-fill layout-row">
     <span class="flex-40">{{ 'labels.inputs.Currency in multiples of' | translate }}:</span>
-    <span class="flex-60">{{ loanProduct.currency.inMultiplesOf }}</span>
+    <span class="flex-60">{{ loanProduct.inMultiplesOf ?? loanProduct.currency.inMultiplesOf }}</span>
   </div>
 
   <div class="flex-fill layout-row">
