@@ -299,6 +299,12 @@ export class LoanProductSummaryComponent implements OnInit, OnChanges {
         };
       }
 
+      // Resolve display names for id-based selects so they reflect edits in the preview.
+      if (this.loanProduct.fundId) {
+        const fund = this.optionDataLookUp(this.loanProduct.fundId, this.loanProductsTemplate.fundOptions || []);
+        this.loanProduct.fundName = fund ? fund.value : this.loanProduct.fundName;
+      }
+
       let optionValue: OptionData = this.optionDataLookUp(
         this.loanProduct.amortizationType,
         this.loanProductsTemplate.amortizationTypeOptions
