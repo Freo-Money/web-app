@@ -162,6 +162,10 @@ export class LoansService {
     return this.http.get(`/loans/${loanId}`);
   }
 
+  getLoanScheduleHistory(loanId: string, version: number) {
+    return this.http.get(`/loans/${loanId}/schedule-history/${version}`);
+  }
+
   /**
    * Get collateral template.
    * @param {string} loanId Loan Id.

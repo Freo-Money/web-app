@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Currency } from 'app/shared/models/general.model';
+import { LoansService } from '../../loans.service';
 import {
   MatTable,
   MatColumnDef,
@@ -51,7 +52,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 })
 export class OriginalScheduleTabComponent {
   /** Loan Details Data */
-  originalScheduleDetails: any;
+  originalScheduleDetails: any = { periods: [] };
+  hasScheduleData = false;
   /** Columns to be displayed in original schedule table. */
   displayedColumns: string[] = [
     'number',
@@ -70,10 +72,23 @@ export class OriginalScheduleTabComponent {
    * Retrieves the loans with associations data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
    */
-  constructor(private route: ActivatedRoute) {
+  constructor(
+    private route: ActivatedRoute,
+    private loansService: LoansService
+  ) {
     this.route.parent.data.subscribe((data: { loanDetailsData: any }) => {
       this.currency = data.loanDetailsData.currency;
-      this.originalScheduleDetails = data.loanDetailsData.originalSchedule;
+      const loanId = data.loanDetailsData.id;
+      this.loansService.getLoanScheduleHistory(loanId, 1).subscribe((scheduleData: any) => {
+        if (scheduleData?.periods) {
+          const repaymentPeriods = scheduleData.periods.filter((p: any) => p.period != null);
+          if (repaymentPeriods.length > 0) {
+            scheduleData.periods = repaymentPeriods;
+            this.originalScheduleDetails = scheduleData;
+            this.hasScheduleData = true;
+          }
+        }
+      });
     });
   }
 }
