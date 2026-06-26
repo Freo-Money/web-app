@@ -71,6 +71,38 @@
           {{ transactionData.amount | currency: transactionData.currency.code : 'symbol-narrow' : '1.2-2' }}
         </div>
 
+        <div class="flex-50 mat-body-strong" *ngIf="transactionData.createdOnDate">
+          {{ 'Created Date' | translateKey: 'catalogs' }}
+        </div>
+
+        <div class="flex-50" *ngIf="transactionData.createdOnDate">
+          {{ transactionData.createdOnDate | date: 'dd MMMM yyyy : hh:mm:ss a' }}
+        </div>
+
+        <div class="flex-50 mat-body-strong" *ngIf="transactionData.createdByUsername">
+          {{ 'Created By' | translateKey: 'catalogs' }}
+        </div>
+
+        <div class="flex-50" *ngIf="transactionData.createdByUsername">
+          {{ transactionData.createdByUsername }}
+        </div>
+
+        <div class="flex-50 mat-body-strong" *ngIf="transactionData.lastModifiedOnDate">
+          {{ 'Updated Date' | translateKey: 'catalogs' }}
+        </div>
+
+        <div class="flex-50" *ngIf="transactionData.lastModifiedOnDate">
+          {{ transactionData.lastModifiedOnDate | date: 'dd MMMM yyyy : hh:mm:ss a' }}
+        </div>
+
+        <div class="flex-50 mat-body-strong" *ngIf="transactionData.lastModifiedByUsername">
+          {{ 'Updated By' | translateKey: 'catalogs' }}
+        </div>
+
+        <div class="flex-50" *ngIf="transactionData.lastModifiedByUsername">
+          {{ transactionData.lastModifiedByUsername }}
+        </div>
+
         <div class="flex-50 mat-body-strong" *ngIf="transactionData.externalId">
           {{ 'External Id' | translate }}
         </div>

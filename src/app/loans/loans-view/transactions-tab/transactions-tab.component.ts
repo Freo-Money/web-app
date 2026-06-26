@@ -254,7 +254,9 @@ export class TransactionsTabComponent implements OnInit {
       1,
       2,
       4,
+      6,
       9,
+      17,
       20,
       21,
       22,
@@ -497,6 +499,7 @@ export class TransactionsTabComponent implements OnInit {
             required: false,
             order: 4
           })
+
         ];
         const data = {
           title: this.translateService.instant('labels.buttons.Create Interest Refund'),
@@ -571,10 +574,10 @@ export class TransactionsTabComponent implements OnInit {
               max: transactionAmount,
               validators: [
                 Validators.min(0.001),
-                Validators.max(transactionAmount)
-              ],
+                Validators.max(transactionAmount)],
               order: 2
             })
+
           ];
           const data = {
             title: `Adjustment ${transaction.type.value} Transaction`,
@@ -647,10 +650,10 @@ export class TransactionsTabComponent implements OnInit {
               max: transactionAmount,
               validators: [
                 Validators.min(0.001),
-                Validators.max(transactionAmount)
-              ],
+                Validators.max(transactionAmount)],
               order: 2
             })
+
           ];
           const data = {
             title: `Adjustment ${transaction.type.value} Transaction`,
