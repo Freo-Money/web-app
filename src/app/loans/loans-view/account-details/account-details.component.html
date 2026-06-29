@@ -140,12 +140,12 @@
     </div>
 
     <div class="flex-fill layout-row">
-      <span class="flex-50"> {{ 'labels.inputs.Grace: On Principal Payment' | translate }}</span>
+      <span class="flex-50"> {{ 'labels.inputs.Grace on Principal Payment' | translate }}</span>
       <span class="flex-50"> {{ loanDetails.graceOnPrincipalPayment }} </span>
     </div>
 
     <div class="flex-fill layout-row">
-      <span class="flex-50"> {{ 'labels.inputs.Grace: On Interest Payment' | translate }}</span>
+      <span class="flex-50"> {{ 'labels.inputs.Grace on Interest Payment' | translate }}</span>
       <span class="flex-50"> {{ loanDetails.graceOnInterestPayment }} </span>
     </div>
 
@@ -182,7 +182,7 @@
       <span class="flex-50"> {{ loanDetails.allowPartialPeriodInterestCalculation | yesNo }} </span>
     </div>
 
-    <div class="flex-fill layout-row">
+    <div class="flex-fill layout-row" *ngIf="loanDetails.brokenPeriodConfig">
       <span class="flex-50"> Initial broken-period interest computation </span>
       <span class="flex-50">
         {{ loanDetails.brokenPeriodConfig.brokenPeriodMethodType?.replaceAll('_', ' ') }}
@@ -303,7 +303,7 @@
         }}&nbsp;{{ 'labels.text.Days' | translate }}
       </span>
     </div>
-    <div class="flex-fill layout-row">
+    <div class="flex-fill layout-row" *ngIf="loanDetails.brokenPeriodConfig">
       <span class="flex-50"> Broken Period Days in month </span>
       <span class="flex-50">
         {{
@@ -314,7 +314,7 @@
       </span>
     </div>
 
-    <div class="flex-fill layout-row">
+    <div class="flex-fill layout-row" *ngIf="loanDetails.brokenPeriodConfig">
       <span class="flex-50"> Broken Period Days in year </span>
       <span class="flex-50"> {{ loanDetails.brokenPeriodConfig.brokenPeriodDaysInYear }} days </span>
     </div>
