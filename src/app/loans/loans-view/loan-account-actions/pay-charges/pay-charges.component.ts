@@ -276,8 +276,7 @@ export class PayChargesComponent implements OnInit, OnChanges {
     const amountControl = this.payChargesForm.controls.transactionAmount;
     const validators = [
       Validators.required,
-      Validators.min(0.001)
-    ];
+      Validators.min(0.001)];
     if (this.outstandingAmount !== null) {
       validators.push(Validators.max(this.outstandingAmount));
     }
@@ -353,8 +352,7 @@ export class PayChargesComponent implements OnInit, OnChanges {
         '',
         [
           Validators.required,
-          Validators.min(0.001)
-        ]
+          Validators.min(0.001)]
       ],
       paymentTypeId: '',
       externalId: '',
@@ -428,8 +426,7 @@ export class PayChargesComponent implements OnInit, OnChanges {
       data.bankNumber = payChargesFormData.bankNumber;
     }
     if (payChargesFormData.note) {
-      data.remark = payChargesFormData.note;
-      data.remarks = payChargesFormData.note;
+      data.note = payChargesFormData.note;
     }
 
     this.loansService.submitLoanChargePayment(this.loanId, chargeId, data).subscribe(() => {
