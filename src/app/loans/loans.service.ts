@@ -244,6 +244,10 @@ export class LoansService {
     return this.http.delete(`/loans/${loanId}/notes/${noteId}`);
   }
 
+  getLoanTransactionNotes(transactionId: string | number) {
+    return this.http.get<any[]>(`/loanTransactions/${transactionId}/notes`);
+  }
+
   /**
    * Used For: Close Action, Prepay Loan Action
    * Returns the response of the action

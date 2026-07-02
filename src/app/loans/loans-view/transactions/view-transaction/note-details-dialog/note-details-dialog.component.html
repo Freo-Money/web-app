@@ -1,0 +1,67 @@
+<mat-dialog-content>
+  <ng-container *ngIf="!data.history">
+    <div class="note-details-row">
+      <span class="label">Note</span>
+      <span class="separator">:</span>
+      <span class="value">{{ data.note }}</span>
+    </div>
+
+    <div class="note-details-row">
+      <span class="label">Created By</span>
+      <span class="separator">:</span>
+      <span class="value">
+        {{ data.createdBy ? data.createdBy.firstname + ' ' + data.createdBy.lastname : data.createdByUsername }}
+      </span>
+    </div>
+
+    <div class="note-details-row">
+      <span class="label">Created On</span>
+      <span class="separator">:</span>
+      <span class="value">{{ data.createdOn | date: 'dd MMM yyyy hh:mm a' }}</span>
+    </div>
+
+    <div class="note-details-row">
+      <span class="label">Updated By</span>
+      <span class="separator">:</span>
+      <span class="value">
+        {{ data.updatedBy ? data.updatedBy.firstname + ' ' + data.updatedBy.lastname : data.updatedByUsername }}
+      </span>
+    </div>
+
+    <div class="note-details-row">
+      <span class="label">Updated On</span>
+      <span class="separator">:</span>
+      <span class="value">{{ data.updatedOn | date: 'dd MMM yyyy hh:mm a' }}</span>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="data.history">
+    <mat-card *ngFor="let note of data.notes" class="note-card">
+      <div>
+        <strong>{{ note.note }}</strong>
+      </div>
+
+      <div>
+        Created By:
+        {{ note.createdBy ? note.createdBy.firstname + ' ' + note.createdBy.lastname : note.createdByUsername }}
+      </div>
+
+      <div>Created On: {{ note.createdOn }}</div>
+
+      <div>
+        Updated By:
+        {{
+          note.updatedBy
+            ? note.updatedBy.firstname + ' ' + note.updatedBy.lastname
+            : note.lastModifiedByUsername || note.updatedByUsername
+        }}
+      </div>
+
+      <div>Updated On: {{ note.updatedOn }}</div>
+    </mat-card>
+  </ng-container>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-raised-button color="primary" (click)="close()">Close</button>
+</mat-dialog-actions>
