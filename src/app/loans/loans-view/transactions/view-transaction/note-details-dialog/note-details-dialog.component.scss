@@ -1,0 +1,39 @@
+.note-card {
+  margin-bottom: 16px;
+  padding: 16px;
+}
+
+mat-dialog-content {
+  max-height: 500px;
+  overflow: auto;
+}
+
+p {
+  margin: 4px 0 12px;
+}
+
+.note-details-row {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 14px;
+}
+
+.note-details-row .label {
+  width: 120px;
+  font-weight: 600;
+}
+
+.note-details-row .separator {
+  width: 16px;
+  text-align: center;
+  font-weight: 600;
+}
+
+.note-details-row .value {
+  flex: 1;
+  word-break: break-word;
+}
+
+mat-dialog-actions {
+  padding-top: 16px;
+}

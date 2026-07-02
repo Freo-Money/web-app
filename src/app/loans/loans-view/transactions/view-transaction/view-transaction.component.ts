@@ -13,6 +13,7 @@ import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-
 import { InputBase } from 'app/shared/form-dialog/formfield/model/input-base';
 import { SelectBase } from 'app/shared/form-dialog/formfield/model/select-base';
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
+import { NoteDetailsDialogComponent } from './note-details-dialog/note-details-dialog.component';
 import {
   MatTableDataSource,
   MatTable,
@@ -95,6 +96,9 @@ export class ViewTransactionComponent implements OnInit {
 
   clientId: number;
   loanId: number;
+  notes: any[] = [];
+  latestNote: any = null;
+  previousNotes: any[] = [];
 
   /**
    * Retrieves the Transaction data from `resolve`.
@@ -119,6 +123,15 @@ export class ViewTransactionComponent implements OnInit {
   ) {
     this.route.data.subscribe((data: { loansAccountTransaction: any }) => {
       this.transactionData = data.loansAccountTransaction;
+      this.loansService.getLoanTransactionNotes(this.transactionData.id).subscribe((notes: any[]) => {
+        this.notes = (notes ?? []).sort(
+          (a, b) => new Date(a.updatedOn || a.createdOn).getTime() - new Date(b.updatedOn || b.createdOn).getTime()
+        );
+
+        this.latestNote = this.notes[this.notes.length - 1];
+        this.previousNotes = this.notes.slice(0, this.notes.length - 1);
+        this.transactionData.note = this.latestNote.note;
+      });
       this.transactionType = this.transactionData.type;
       this.allowEdition =
         !this.transactionData.manuallyReversed && !this.allowTransactionEdition(this.transactionData.type.id);
@@ -341,5 +354,22 @@ export class ViewTransactionComponent implements OnInit {
       return 'linked';
     }
     return 'active';
+  }
+
+  openNoteDialog(note: any): void {
+    this.dialog.open(NoteDetailsDialogComponent, {
+      width: '600px',
+      data: note
+    });
+  }
+
+  openPreviousNotesDialog(): void {
+    this.dialog.open(NoteDetailsDialogComponent, {
+      width: '650px',
+      data: {
+        notes: this.previousNotes,
+        history: true
+      }
+    });
   }
 }

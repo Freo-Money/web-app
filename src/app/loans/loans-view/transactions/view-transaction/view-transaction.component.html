@@ -79,28 +79,34 @@
           {{ transactionData.createdOnDate | date: 'dd MMMM yyyy : hh:mm:ss a' }}
         </div>
 
-        <div class="flex-50 mat-body-strong" *ngIf="transactionData.createdByUsername">
+        <div
+          class="flex-50 mat-body-strong"
+          *ngIf="transactionData.createdByFirstname || transactionData.createdByLastname"
+        >
           {{ 'Created By' | translateKey: 'catalogs' }}
         </div>
 
-        <div class="flex-50" *ngIf="transactionData.createdByUsername">
-          {{ transactionData.createdByUsername }}
+        <div class="flex-50" *ngIf="transactionData.createdByFirstname || transactionData.createdByLastname">
+          {{ transactionData.createdByFirstname }} {{ transactionData.createdByLastname }}
         </div>
 
-        <div class="flex-50 mat-body-strong" *ngIf="transactionData.lastModifiedOnDate">
+        <div class="flex-50 mat-body-strong" *ngIf="transactionData.updatedOnDate">
           {{ 'Updated Date' | translateKey: 'catalogs' }}
         </div>
 
-        <div class="flex-50" *ngIf="transactionData.lastModifiedOnDate">
-          {{ transactionData.lastModifiedOnDate | date: 'dd MMMM yyyy : hh:mm:ss a' }}
+        <div class="flex-50" *ngIf="transactionData.updatedOnDate">
+          {{ transactionData.updatedOnDate | date: 'dd MMMM yyyy : hh:mm:ss a' }}
         </div>
 
-        <div class="flex-50 mat-body-strong" *ngIf="transactionData.lastModifiedByUsername">
+        <div
+          class="flex-50 mat-body-strong"
+          *ngIf="transactionData.updatedByFirstname || transactionData.updatedByLastname"
+        >
           {{ 'Updated By' | translateKey: 'catalogs' }}
         </div>
 
-        <div class="flex-50" *ngIf="transactionData.lastModifiedByUsername">
-          {{ transactionData.lastModifiedByUsername }}
+        <div class="flex-50" *ngIf="transactionData.updatedByFirstname || transactionData.updatedByLastname">
+          {{ transactionData.updatedByFirstname }} {{ transactionData.updatedByLastname }}
         </div>
 
         <div class="flex-50 mat-body-strong" *ngIf="transactionData.externalId">
@@ -113,13 +119,25 @@
             completed="true"
           ></mifosx-external-identifier>
         </div>
-
-        <div class="flex-50 mat-body-strong" *ngIf="transactionData.note">
+        <div class="flex-50 note-label mat-body-strong" *ngIf="latestNote">
           {{ 'Note' | translateKey: 'catalogs' }}
         </div>
 
-        <div class="flex-50" *ngIf="transactionData.note">
-          {{ transactionData.note }}
+        <div class="flex-50 note-value" *ngIf="latestNote">
+          <div class="note-container">
+            <a class="note-link" (click)="openNoteDialog(latestNote)">
+              {{ latestNote.note }}
+            </a>
+
+            <button
+              *ngIf="previousNotes.length"
+              mat-icon-button
+              class="note-toggle-btn"
+              (click)="openPreviousNotesDialog()"
+            >
+              <mat-icon>expand_more</mat-icon>
+            </button>
+          </div>
         </div>
 
         <mat-divider *ngIf="existTransactionRelations" [inset]="true"></mat-divider>
