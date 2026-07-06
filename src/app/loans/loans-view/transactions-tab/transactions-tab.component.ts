@@ -396,6 +396,9 @@ export class TransactionsTabComponent implements OnInit {
   private isAccrual(transactionType: LoanTransactionType): boolean {
     return (
       transactionType.accrual ||
+      transactionType.accrualActivity ||
+      transactionType.accrualAdjustment ||
+      transactionType.accrualWriteoff ||
       transactionType.accrualSuspense ||
       transactionType.accrualSuspenseReverse ||
       transactionType.code === 'loanTransactionType.overdueCharge'
