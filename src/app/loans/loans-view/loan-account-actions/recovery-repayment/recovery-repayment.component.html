@@ -22,6 +22,7 @@
           </mat-form-field>
 
           <mifosx-input-amount
+            *ngIf="currency"
             [currency]="currency"
             [isRequired]="true"
             [inputFormControl]="recoveryRepaymentLoanForm.controls.transactionAmount"
