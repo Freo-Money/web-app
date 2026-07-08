@@ -47,7 +47,13 @@ export class RecoveryRepaymentComponent implements OnInit {
   maxDate = new Date();
   /** Recovery Repayment Loan Form */
   recoveryRepaymentLoanForm: UntypedFormGroup;
-  currency: Currency | null = null;
+  currency: Currency = {
+    code: 'INR',
+    name: 'Indian Rupee',
+    decimalPlaces: 2,
+    displaySymbol: '₹',
+    nameCode: 'currency.INR'
+  } as Currency;
 
   /**
    * @param {FormBuilder} formBuilder Form Builder.
@@ -73,11 +79,19 @@ export class RecoveryRepaymentComponent implements OnInit {
    */
   ngOnInit() {
     this.maxDate = this.settingsService.businessDate;
-    this.createRecoveryRepaymentLoanForm();
-    this.setRecoveryRepaymentLoanDetails();
-    if (this.dataObject.currency) {
-      this.currency = this.dataObject.currency;
-    }
+    this.route.parent?.data.subscribe((data: any) => {
+      this.currency =
+        data.loanDetailsData?.currency ??
+        ({
+          code: 'INR',
+          name: 'Indian Rupee',
+          decimalPlaces: 2,
+          displaySymbol: '₹',
+          nameCode: 'currency.INR'
+        } as Currency);
+      this.createRecoveryRepaymentLoanForm();
+      this.setRecoveryRepaymentLoanDetails();
+    });
   }
 
   /**
@@ -104,7 +118,7 @@ export class RecoveryRepaymentComponent implements OnInit {
     this.paymentTypes = this.dataObject.paymentTypeOptions;
     this.recoveryRepaymentLoanForm.patchValue({
       transactionAmount: this.dataObject.amount,
-      transactionDate: new Date(this.dataObject.date)
+      transactionDate: this.maxDate ?? new Date()
     });
   }
 
