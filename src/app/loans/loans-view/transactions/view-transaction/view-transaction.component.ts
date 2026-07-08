@@ -99,6 +99,7 @@ export class ViewTransactionComponent implements OnInit {
   notes: any[] = [];
   latestNote: any = null;
   previousNotes: any[] = [];
+  showComponentBreakdown = false;
 
   /**
    * Retrieves the Transaction data from `resolve`.
@@ -371,5 +372,9 @@ export class ViewTransactionComponent implements OnInit {
         history: true
       }
     });
+  }
+
+  toggleComponentBreakdown(): void {
+    this.showComponentBreakdown = !this.showComponentBreakdown;
   }
 }

@@ -67,9 +67,59 @@
           {{ 'Amount' | translateKey: 'catalogs' }}
         </div>
 
-        <div class="flex-50">
-          {{ transactionData.amount | currency: transactionData.currency.code : 'symbol-narrow' : '1.2-2' }}
+        <div class="flex-50 amount-cell">
+          <div class="amount-header">
+            <span>
+              {{ transactionData.amount | currency: transactionData.currency.code : 'symbol-narrow' : '1.2-2' }}
+            </span>
+
+            <button
+              type="button"
+              mat-button
+              class="amount-toggle-btn"
+              *ngIf="transactionData.principalPortion != null"
+              (click)="toggleComponentBreakdown()"
+            >
+              <mat-icon>
+                {{ showComponentBreakdown ? 'expand_less' : 'expand_more' }}
+              </mat-icon>
+            </button>
+          </div>
         </div>
+
+        <ng-container *ngIf="showComponentBreakdown">
+          <div class="flex-50" *ngIf="transactionData.principalPortion > 0">Principal</div>
+          <div class="flex-50" *ngIf="transactionData.principalPortion > 0">
+            {{ transactionData.principalPortion | currency: transactionData.currency.code : 'symbol-narrow' : '1.2-2' }}
+          </div>
+
+          <div class="flex-50" *ngIf="transactionData.interestPortion > 0">Interest</div>
+          <div class="flex-50" *ngIf="transactionData.interestPortion > 0">
+            {{ transactionData.interestPortion | currency: transactionData.currency.code : 'symbol-narrow' : '1.2-2' }}
+          </div>
+
+          <div class="flex-50" *ngIf="transactionData.feeChargesPortion > 0">Fees</div>
+          <div class="flex-50" *ngIf="transactionData.feeChargesPortion > 0">
+            {{
+              transactionData.feeChargesPortion | currency: transactionData.currency.code : 'symbol-narrow' : '1.2-2'
+            }}
+          </div>
+
+          <div class="flex-50" *ngIf="transactionData.penaltyChargesPortion > 0">Penalties</div>
+          <div class="flex-50" *ngIf="transactionData.penaltyChargesPortion > 0">
+            {{
+              transactionData.penaltyChargesPortion
+                | currency: transactionData.currency.code : 'symbol-narrow' : '1.2-2'
+            }}
+          </div>
+
+          <div class="flex-50" *ngIf="transactionData.overpaymentPortion > 0">Overpayment</div>
+          <div class="flex-50" *ngIf="transactionData.overpaymentPortion > 0">
+            {{
+              transactionData.overpaymentPortion | currency: transactionData.currency.code : 'symbol-narrow' : '1.2-2'
+            }}
+          </div>
+        </ng-container>
 
         <div class="flex-50 mat-body-strong" *ngIf="transactionData.createdOnDate">
           {{ 'Created Date' | translateKey: 'catalogs' }}
@@ -129,14 +179,9 @@
               {{ latestNote.note }}
             </a>
 
-            <button
-              *ngIf="previousNotes.length"
-              mat-icon-button
-              class="note-toggle-btn"
-              (click)="openPreviousNotesDialog()"
-            >
-              <mat-icon>expand_more</mat-icon>
-            </button>
+            <mat-icon *ngIf="previousNotes.length" class="note-toggle-icon" (click)="openPreviousNotesDialog()">
+              expand_more
+            </mat-icon>
           </div>
         </div>
 
