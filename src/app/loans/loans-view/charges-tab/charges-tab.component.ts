@@ -220,6 +220,24 @@ export class ChargesTabComponent implements OnInit {
     });
   }
 
+  applyOverdues(): void {
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      data: {
+        heading: this.translateService.instant('labels.heading.Apply Overdues'),
+        dialogContext: this.translateService.instant('labels.dialogContext.Are you sure you want to apply overdues'),
+        type: 'Basic'
+      }
+    });
+
+    dialogRef.afterClosed().subscribe((response: any) => {
+      if (response.confirm) {
+        this.loansService.applyOverdues(this.loanDetails.id).subscribe(() => {
+          this.reload();
+        });
+      }
+    });
+  }
+
   /**
    * Asjust the Loan charge.
    * @param {any} chargeId Charge Id
@@ -241,6 +259,7 @@ export class ChargesTabComponent implements OnInit {
         type: 'date',
         required: true
       })
+
     ];
     const data = {
       title: `Pay Charge ${chargeId}`,
@@ -305,6 +324,7 @@ export class ChargesTabComponent implements OnInit {
         type: 'number',
         required: true
       })
+
     ];
     const data = {
       title: `Edit Charge ${charge.id}`,
