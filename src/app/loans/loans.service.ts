@@ -563,6 +563,10 @@ export class LoansService {
     return this.http.post(`/loans/${accountId}/charges`, data, { params: httpParams });
   }
 
+  applyOverdues(loanId: number) {
+    return this.http.post(`/loans/${loanId}/charges/apply-overdue`, {});
+  }
+
   /**
    * @param {string} loanId Loans Account Id
    * @param {string} command Schedule command
