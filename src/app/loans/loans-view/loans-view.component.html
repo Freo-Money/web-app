@@ -104,6 +104,18 @@
                       }}
                     </td>
                   </tr>
+                  <tr>
+                    <td>{{ 'labels.inputs.Total Outstanding' | translate }}</td>
+                    <td class="r-amount">
+                      {{
+                        (loanDetailsData.summary.principalOutstanding || 0) +
+                          (loanDetailsData.summary.interestOutstanding || 0) +
+                          (loanDetailsData.summary.feeChargesOutstanding || 0) +
+                          (loanDetailsData.summary.penaltyChargesOutstanding || 0)
+                          | currency: currency.code : 'symbol-narrow' : '1.2-2'
+                      }}
+                    </td>
+                  </tr>
                   <tr *ngIf="loanDisplayArrearsDelinquency < 2">
                     <td>{{ 'labels.inputs.Arrears By' | translate }}</td>
                     <td class="r-amount" *ngIf="loanDetailsData.summary.totalOverdue >= 0">

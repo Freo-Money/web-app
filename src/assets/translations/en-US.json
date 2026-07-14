@@ -527,6 +527,7 @@
       "View Transactions History": "View Transactions History",
       "Waive": "Waive",
       "Waive Selected Charges": "Waive Selected Charges",
+      "Apply Overdues": "Apply Overdues",
       "Week": "Week",
       "Withdraw": "Withdraw",
       "View Active Charges": "View Active Charges",
@@ -804,6 +805,7 @@
       "Password validation": "The password should contain a minimum of {{minchar}} characters, including 1 uppercase, 1 lowercase and a special character and should not include repeated characters or spaces."
     },
     "heading": {
+      "Apply Overdues": "Apply Overdues",
       "Account Linked Financial": "List of accounts linked to different financial activities. To know more click:",
       "Account Name": "Account Name",
       "Account Number Preferences": "Account Number Preferences",
@@ -2347,6 +2349,7 @@
       "Theme and Font": "Theme and Font",
       "Thursday": "Thursday",
       "Time": "Time",
+      "Total Outstanding": "Total Outstanding",
       "To": "To",
       "To Account": "To Account",
       "To Account Type": "To Account Type",
@@ -2668,6 +2671,7 @@
       "Withdrawn": "Withdrawn"
     },
     "dialogContext": {
+      "Are you sure you want to apply overdues": "Are you sure you want to apply overdues",
       "Are you sure you want to waive charge with id ": "Are you sure you want to waive charge with id ",
       "Are you sure you want to waive": "Are you sure you want to waive ",
       "Are you sure you want Unassign Staff": "Are you sure you want Unassign Staff",
@@ -3461,6 +3465,7 @@
     "A unique identifier for the share product": "A unique identifier for the share product",
     "Add future share value with date range": "Add future share value with date range",
     "Activate": "Activate",
+    "Apply Overdues": "Apply Overdues",
     "Add": "Add",
     "Add Filters": "Add Filters",
     "Adjust Charge": "Adjust Charge",
