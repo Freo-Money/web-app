@@ -108,10 +108,7 @@
                     <td>{{ 'labels.inputs.Total Outstanding' | translate }}</td>
                     <td class="r-amount">
                       {{
-                        (loanDetailsData.summary.principalOutstanding || 0) +
-                          (loanDetailsData.summary.interestOutstanding || 0) +
-                          (loanDetailsData.summary.feeChargesOutstanding || 0) +
-                          (loanDetailsData.summary.penaltyChargesOutstanding || 0)
+                        loanDetailsData.summary.totalOutstanding || 0
                           | currency: currency.code : 'symbol-narrow' : '1.2-2'
                       }}
                     </td>
