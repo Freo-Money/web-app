@@ -2,15 +2,6 @@
   <div class="space-top layout-row gap-10px" style="justify-content: flex-end; margin-bottom: 16px">
     <button
       mat-raised-button
-      color="accent"
-      (click)="applyOverdues()"
-      matTooltip="{{ 'tooltips.Apply Overdues' | translate }}"
-    >
-      <fa-icon icon="clock" class="m-r-10"></fa-icon>
-      {{ 'labels.buttons.Apply Overdues' | translate }}
-    </button>
-    <button
-      mat-raised-button
       color="primary"
       (click)="waiveoffSelectedCharges()"
       [disabled]="!isAnyChargeSelected()"

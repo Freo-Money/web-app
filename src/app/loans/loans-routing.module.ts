@@ -55,6 +55,7 @@ import { LoanDelinquencyTagsTabComponent } from './loans-view/loan-delinquency-t
 import { LoanReschedulesResolver } from './common-resolvers/loan-reschedules.resolver';
 import { RescheduleLoanTabComponent } from './loans-view/reschedule-loan-tab/reschedule-loan-tab.component';
 import { AdjustLoanChargeComponent } from './loans-view/loan-account-actions/adjust-loan-charge/adjust-loan-charge.component';
+import { ApplyPenaltiesComponent } from './loans-view/loan-account-actions/apply-penalties/apply-penalties.component';
 import { LoanArrearDelinquencyResolver } from './common-resolvers/loan-arrear-delinquency.resolver';
 import { ExternalAssetOwnerTabComponent } from './loans-view/external-asset-owner-tab/external-asset-owner-tab.component';
 import { ExternalAssetOwnerResolver } from './common-resolvers/external-asset-owner.resolver';
@@ -357,6 +358,18 @@ const routes: Routes = [
             }
           }
         ]
+      },
+      {
+        path: ':loanId/apply-penalties',
+        component: ApplyPenaltiesComponent,
+        data: {
+          title: 'Apply Penalties',
+          breadcrumb: 'Apply Penalties',
+          routeParamBreadcrumb: false
+        },
+        resolve: {
+          loanDetailsData: LoanDetailsResolver
+        }
       },
       {
         path: ':loanId/actions/:action',
