@@ -83,8 +83,6 @@ export class TransactionsTabComponent implements OnInit {
   /** Columns to be displayed in original schedule table. */
   displayedColumns: string[] = [
     'row',
-    'id',
-    'office',
     'externalId',
     'date',
     'transactionType',
@@ -98,8 +96,6 @@ export class TransactionsTabComponent implements OnInit {
   ];
   displayedHeader1Columns: string[] = [
     'h1-row',
-    'h1-id',
-    'h1-office',
     'h1-external-id',
     'h1-transaction-date',
     'h1-transaction-type',

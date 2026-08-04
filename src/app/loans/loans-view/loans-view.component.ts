@@ -318,6 +318,9 @@ export class LoansViewComponent implements OnInit {
           queryParams: queryParams
         });
         break;
+      case 'Apply Penalties':
+        this.router.navigate(['apply-penalties'], { relativeTo: this.route });
+        break;
       case 'Undo Re-Age':
       case 'Undo Re-Amortize':
       case 'Undo Charge-Off':

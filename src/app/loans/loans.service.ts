@@ -563,7 +563,7 @@ export class LoansService {
     return this.http.post(`/loans/${accountId}/charges`, data, { params: httpParams });
   }
 
-  applyOverdues(loanId: number) {
+  applyPenalties(loanId: number) {
     return this.http.post(`/loans/${loanId}/charges/apply-overdue`, {});
   }
 

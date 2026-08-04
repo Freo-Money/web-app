@@ -2535,6 +2535,7 @@
       "Working with Code": "Working with Code"
     },
     "menus": {
+      "Apply Penalties": "Apply Penalties",
       "Accounting": "Accounting",
       "Account Overview": "Account Overview",
       "Activate": "Activate",
@@ -2703,6 +2704,7 @@
       "the Transaction Type": "the Transaction Type"
     },
     "text": {
+      "Apply Penalties": "Apply Penalties",
       "A": "A",
       "Ability to manage holidays for individual offices": "The ability to manage holidays for individual offices is a very useful tool for an organization spanning multiple locations.Use this option to customize holidays for each office of your organization.",
       "Account Detail": "Account Detail",

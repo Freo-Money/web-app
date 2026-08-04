@@ -204,6 +204,10 @@ export class LoansAccountButtonConfiguration {
           {
             name: 'Sell Loan',
             taskPermissionName: 'SALE_LOAN'
+          },
+          {
+            name: 'Apply Penalties',
+            taskPermissionName: 'APPLYPENALTY_LOAN'
           }
         ];
         if (!this.isContractTermination(substatus)) {

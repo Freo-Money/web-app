@@ -220,24 +220,6 @@ export class ChargesTabComponent implements OnInit {
     });
   }
 
-  applyOverdues(): void {
-    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      data: {
-        heading: this.translateService.instant('labels.heading.Apply Overdues'),
-        dialogContext: this.translateService.instant('labels.dialogContext.Are you sure you want to apply overdues'),
-        type: 'Basic'
-      }
-    });
-
-    dialogRef.afterClosed().subscribe((response: any) => {
-      if (response.confirm) {
-        this.loansService.applyOverdues(this.loanDetails.id).subscribe(() => {
-          this.reload();
-        });
-      }
-    });
-  }
-
   /**
    * Asjust the Loan charge.
    * @param {any} chargeId Charge Id
