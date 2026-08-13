@@ -125,6 +125,26 @@
 
     <mat-divider class="flex-98"></mat-divider>
 
+    <mat-form-field class="flex-48" *ngIf="partPaymentRecalculationStrategyOptions.length > 0">
+      <mat-label
+        >{{ 'labels.inputs.Part Payment Recalculation Strategy' | translate }}
+        <i
+          class="fas fa-question"
+          matTooltip="{{ 'tooltips.How the schedule is recalculated after a part payment' | translate }}"
+        ></i
+      ></mat-label>
+      <mat-select formControlName="partPaymentRecalculationStrategy">
+        <mat-option
+          *ngFor="let partPaymentStrategy of partPaymentRecalculationStrategyOptions"
+          [value]="partPaymentStrategy.id"
+        >
+          {{ partPaymentStrategy.value | translateKey: 'catalogs' }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-divider class="flex-98"></mat-divider>
+
     <mat-checkbox class="flex-96" labelPosition="before" formControlName="interestRecognitionOnDisbursementDate">
       {{ 'labels.inputs.Is interest recognition on disbursement date?' | translate }}
     </mat-checkbox>

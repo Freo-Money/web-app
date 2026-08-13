@@ -102,6 +102,11 @@
     <span class="flex-60">{{ loanProduct.repaymentStartDateType?.value | translateKey: 'catalogs' }}</span>
   </div>
 
+  <div class="flex-fill layout-row" *ngIf="partPaymentRecalculationStrategyLabel()">
+    <span class="flex-40">{{ 'labels.inputs.Part Payment Recalculation Strategy' | translate }}:</span>
+    <span class="flex-60">{{ partPaymentRecalculationStrategyLabel() | translateKey: 'catalogs' }}</span>
+  </div>
+
   <div class="flex-fill layout-row">
     <span class="flex-40">{{ 'labels.inputs.Number of Repayments' | translate }}:</span>
     <span class="flex-60">{{

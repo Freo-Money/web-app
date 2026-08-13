@@ -10,6 +10,7 @@
   *ngIf="actions['Prepay Loan'] || actions['Contract Termination']"
 ></mifosx-prepay-loan>
 <mifosx-make-repayment [dataObject]="actionButtonData" *ngIf="actions['Make Repayment']"></mifosx-make-repayment>
+<mifosx-part-payment [dataObject]="actionButtonData" *ngIf="actions['Part Payment']"></mifosx-part-payment>
 <mifosx-make-repayment [dataObject]="actionButtonData" *ngIf="actions['Capitalized Income']"></mifosx-make-repayment>
 <mifosx-make-repayment [dataObject]="actionButtonData" *ngIf="actions['Goodwill Credit']"></mifosx-make-repayment>
 <mifosx-make-repayment [dataObject]="actionButtonData" *ngIf="actions['Buy Down Fee']"></mifosx-make-repayment>

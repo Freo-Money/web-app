@@ -78,6 +78,8 @@ export class LoanProductTermsStepComponent implements OnInit, OnChanges {
   overAppliedCalculationTypeData: any;
   repaymentFrequencyTypeData: any;
   repaymentStartDateTypeOptions: any;
+  /** Reduce EMI / Reduce Tenure choices for the part-payment recalculation strategy. */
+  partPaymentRecalculationStrategyOptions: any[] = [];
 
   displayedColumns: string[] = [
     'valueConditionType',
@@ -105,6 +107,8 @@ export class LoanProductTermsStepComponent implements OnInit, OnChanges {
     this.interestRateFrequencyTypeData = this.loanProductsTemplate.interestRateFrequencyTypeOptions;
     this.repaymentFrequencyTypeData = this.loanProductsTemplate.repaymentFrequencyTypeOptions;
     this.repaymentStartDateTypeOptions = this.loanProductsTemplate.repaymentStartDateTypeOptions;
+    this.partPaymentRecalculationStrategyOptions =
+      this.loanProductsTemplate.partPaymentRecalculationStrategyOptions || [];
     this.overAppliedCalculationTypeData = [
       { id: 'percentage', value: 'Percentage' },
       { id: 'flat', value: 'Fixed Amount' }
@@ -135,7 +139,11 @@ export class LoanProductTermsStepComponent implements OnInit, OnChanges {
       minimumDaysBetweenDisbursalAndFirstRepayment:
         this.loanProductsTemplate.minimumDaysBetweenDisbursalAndFirstRepayment,
       repaymentStartDateType: this.loanProductsTemplate.repaymentStartDateType.id || 1,
-      interestRecognitionOnDisbursementDate: this.loanProductsTemplate.interestRecognitionOnDisbursementDate || false
+      interestRecognitionOnDisbursementDate: this.loanProductsTemplate.interestRecognitionOnDisbursementDate || false,
+      // The GET response nests the strategy under partPaymentConfig as a {id, code, value} option, while the
+      // POST/PUT payload takes the bare enum name - so unwrap to the id here and send the id back on submit.
+      partPaymentRecalculationStrategy:
+        this.loanProductsTemplate.partPaymentConfig?.partPaymentRecalculationStrategy?.id || 'REDUCED_EMI'
     });
 
     if (this.loanProductsTemplate.allowApprovedDisbursedAmountsOverApplied) {
@@ -225,7 +233,8 @@ export class LoanProductTermsStepComponent implements OnInit, OnChanges {
       minimumDaysBetweenDisbursalAndFirstRepayment: [''],
       repaymentStartDateType: [1],
       fixedLength: [null],
-      interestRecognitionOnDisbursementDate: [false]
+      interestRecognitionOnDisbursementDate: [false],
+      partPaymentRecalculationStrategy: ['REDUCED_EMI']
     });
   }
 

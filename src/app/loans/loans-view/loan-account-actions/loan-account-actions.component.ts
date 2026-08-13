@@ -31,6 +31,7 @@ import { LoanReagingComponent } from './loan-reaging/loan-reaging.component';
 import { LoanReamortizeComponent } from './loan-reamortize/loan-reamortize.component';
 import { AddInterestPauseComponent } from './add-interest-pause/add-interest-pause.component';
 import { PayChargesComponent } from 'app/loans/loans-view/loan-account-actions/pay-charges/pay-charges.component';
+import { PartPaymentComponent } from './part-payment/part-payment.component';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
@@ -71,7 +72,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     LoanReagingComponent,
     LoanReamortizeComponent,
     AddInterestPauseComponent,
-    PayChargesComponent
+    PayChargesComponent,
+    PartPaymentComponent
   ]
 })
 export class LoanAccountActionsComponent {
@@ -119,6 +121,7 @@ export class LoanAccountActionsComponent {
     'Capitalized Income': boolean;
     'Contract Termination': boolean;
     'Buy Down Fee': boolean;
+    'Part Payment': boolean;
   } = {
     Close: false,
     'Undo Approval': false,
@@ -158,7 +161,8 @@ export class LoanAccountActionsComponent {
     'Add Interest Pause': false,
     'Capitalized Income': false,
     'Contract Termination': false,
-    'Buy Down Fee': false
+    'Buy Down Fee': false,
+    'Part Payment': false
   };
 
   actionButtonData: any;
