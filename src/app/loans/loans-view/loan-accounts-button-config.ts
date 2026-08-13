@@ -218,6 +218,10 @@ export class LoansAccountButtonConfiguration {
         }
         this.optionPaymentArray = [
           {
+            name: 'Part Payment',
+            taskPermissionName: 'PART_PAYMENT_LOAN'
+          },
+          {
             name: 'Goodwill Credit',
             taskPermissionName: 'CREATE_GOODWILL_TRANSACTION'
           },

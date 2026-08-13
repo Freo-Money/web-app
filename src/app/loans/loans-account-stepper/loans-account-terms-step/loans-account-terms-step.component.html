@@ -322,6 +322,21 @@
       </mat-checkbox>
     </ng-container>
 
+    <mat-form-field class="flex-48" *ngIf="partPaymentRecalculationStrategyOptions.length > 0">
+      <mat-label>{{ 'labels.inputs.Part Payment Recalculation Strategy' | translate }}</mat-label>
+      <mat-select
+        matTooltip="{{ 'tooltips.How the schedule is recalculated after a part payment' | translate }}"
+        formControlName="partPaymentRecalculationStrategy"
+      >
+        <mat-option
+          *ngFor="let partPaymentStrategy of partPaymentRecalculationStrategyOptions"
+          [value]="partPaymentStrategy.id"
+        >
+          {{ partPaymentStrategy.value | translateKey: 'catalogs' }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
     <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Arrears tolerance' | translate }} </mat-label>
       <input

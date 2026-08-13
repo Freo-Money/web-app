@@ -76,6 +76,11 @@ export interface LoanProduct {
   buyDownFeeStrategy?: OptionData;
   buyDownFeeIncomeType?: OptionData;
 
+  /** Part-payment recalculation configuration as returned by GET /loanproducts/{id}. */
+  partPaymentConfig?: PartPaymentConfig;
+  /** Reduce EMI / Reduce Tenure choices, served on the loan product template. */
+  partPaymentRecalculationStrategyOptions?: StringEnumOptionData[];
+
   canDefineInstallmentAmount: boolean;
   graceOnArrearsAgeing?: number;
   overdueDaysForNPA?: number;
@@ -192,4 +197,13 @@ export interface InterestRecalculationData {
   preClosureInterestCalculationStrategy: OptionData;
   allowCompoundingOnEod: boolean;
   disallowInterestCalculationOnPastDue: boolean;
+}
+
+/**
+ * Part-payment recalculation configuration. Note the asymmetry with the request payload: the GET response nests the
+ * strategy here as a {id, code, value} option, while POST/PUT take a bare `partPaymentRecalculationStrategy` string
+ * holding the option's `id` (the enum name, e.g. REDUCED_TENURE).
+ */
+export interface PartPaymentConfig {
+  partPaymentRecalculationStrategy: StringEnumOptionData;
 }

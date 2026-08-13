@@ -29,6 +29,8 @@ export class LoanActionButtonResolver {
       return this.loansService.getLoanTemplate(loanId);
     } else if (loanActionButton === 'Make Repayment') {
       return this.loansService.getLoanActionTemplate(loanId, 'repayment');
+    } else if (loanActionButton === 'Part Payment') {
+      return this.loansService.getLoanActionTemplate(loanId, 'partPayment');
     } else if (loanActionButton === 'Goodwill Credit') {
       return this.loansService.getLoanActionTemplate(loanId, 'goodwillCredit');
     } else if (loanActionButton === 'Interest Payment Waiver') {

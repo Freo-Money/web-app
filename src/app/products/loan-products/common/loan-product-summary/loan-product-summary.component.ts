@@ -593,4 +593,23 @@ export class LoanProductSummaryComponent implements OnInit, OnChanges {
   mapHumanReadableValueStringEnumOptionDataList(incomingParameter: StringEnumOptionData[]): string[] {
     return incomingParameter.map((v) => v.value);
   }
+
+  /**
+   * Label for the part-payment recalculation strategy, resolved from either shape this component is fed: on 'view'
+   * the loan product comes from the API and nests an option object under partPaymentConfig, whereas on 'preview' it
+   * is the not-yet-submitted form payload carrying the bare enum name.
+   */
+  partPaymentRecalculationStrategyLabel(): string {
+    const configuredStrategy = (this.loanProduct as any)?.partPaymentConfig?.partPaymentRecalculationStrategy;
+    if (configuredStrategy) {
+      return configuredStrategy.value;
+    }
+    const selectedId = (this.loanProduct as any)?.partPaymentRecalculationStrategy;
+    if (!selectedId) {
+      return '';
+    }
+    const options: StringEnumOptionData[] = this.loanProductsTemplate?.partPaymentRecalculationStrategyOptions || [];
+    const match = options.find((option: StringEnumOptionData) => option.id === selectedId);
+    return match ? match.value : selectedId;
+  }
 }

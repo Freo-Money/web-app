@@ -219,7 +219,11 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
         multiDisburseLoan: this.loansAccountTermsData.multiDisburseLoan,
         interestRateFrequencyType: this.loansAccountTermsData.interestRateFrequencyType.id,
         balloonRepaymentAmount: this.loansAccountTermsData.balloonRepaymentAmount,
-        interestRecognitionOnDisbursementDate: this.loansAccountTermsData.interestRecognitionOnDisbursementDate || false
+        interestRecognitionOnDisbursementDate:
+          this.loansAccountTermsData.interestRecognitionOnDisbursementDate || false,
+        // Copied from the product on create and from the loan's own snapshot on edit; the user may override it.
+        // The response nests an {id, code, value} option, whereas the payload takes the bare id.
+        partPaymentRecalculationStrategy: this.resolvePartPaymentRecalculationStrategy()
       });
 
       this.setAdvancedPaymentStrategyControls();
@@ -345,7 +349,11 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
         multiDisburseLoan: this.loansAccountTermsData.multiDisburseLoan,
         interestRateFrequencyType: this.loansAccountTermsData.interestRateFrequencyType.id,
         balloonRepaymentAmount: this.loansAccountTermsData.balloonRepaymentAmount,
-        interestRecognitionOnDisbursementDate: this.loansAccountTermsData.interestRecognitionOnDisbursementDate || false
+        interestRecognitionOnDisbursementDate:
+          this.loansAccountTermsData.interestRecognitionOnDisbursementDate || false,
+        // Copied from the product on create and from the loan's own snapshot on edit; the user may override it.
+        // The response nests an {id, code, value} option, whereas the payload takes the bare id.
+        partPaymentRecalculationStrategy: this.resolvePartPaymentRecalculationStrategy()
       });
     }
     this.createloansAccountTermsForm();
@@ -517,8 +525,32 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
       multiDisburseLoan: [false],
       interestRateFrequencyType: [''],
       balloonRepaymentAmount: [''],
-      interestRecognitionOnDisbursementDate: [false]
+      interestRecognitionOnDisbursementDate: [false],
+      partPaymentRecalculationStrategy: [null]
     });
+  }
+
+  /** Reduce EMI / Reduce Tenure choices, served on the loan template alongside the product configuration. */
+  get partPaymentRecalculationStrategyOptions(): any[] {
+    return (
+      this.loansAccountTemplate?.partPaymentRecalculationStrategyOptions ||
+      this.loansAccountProductTemplate?.partPaymentRecalculationStrategyOptions ||
+      []
+    );
+  }
+
+  /**
+   * Part-payment strategy to show on the loan form: the loan's own snapshot when one exists (edit), otherwise the
+   * product's configuration (create). Null when neither is configured, in which case nothing is submitted and the
+   * backend default applies.
+   */
+  private resolvePartPaymentRecalculationStrategy(): string | null {
+    const loanLevel = this.loansAccountTermsData?.partPaymentConfig?.partPaymentRecalculationStrategy;
+    if (loanLevel) {
+      return loanLevel.id;
+    }
+    const productLevel = this.loanProduct?.partPaymentConfig?.partPaymentRecalculationStrategy;
+    return productLevel ? productLevel.id : null;
   }
 
   calculateLoanTerm(numberOfRepayments: number, repaymentEvery: number): void {
