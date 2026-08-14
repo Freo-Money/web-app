@@ -1,0 +1,60 @@
+.container {
+  .header-row {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+
+    h2 {
+      margin: 0;
+    }
+  }
+
+  .table-wrapper {
+    overflow-x: auto;
+  }
+
+  table {
+    width: 100%;
+  }
+
+  .message-button,
+  .action-button {
+    align-items: center;
+    border-radius: 999px;
+    display: inline-flex;
+    height: 36px;
+    justify-content: center;
+    width: 36px;
+  }
+
+  .message-button {
+    background-color: #ff9f1c;
+    color: #fff;
+    height: 28px;
+    width: 28px;
+  }
+
+  .message-button-mark {
+    color: #fff;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  .action-button {
+    background-color: #1976d2;
+    color: #fff;
+  }
+
+  .message-button:disabled,
+  .action-button:disabled {
+    background-color: #d7d7d7;
+    color: #7a7a7a;
+  }
+
+  .empty-state {
+    padding: 1rem 0;
+    text-align: center;
+  }
+}
