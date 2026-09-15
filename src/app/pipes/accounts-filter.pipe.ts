@@ -36,11 +36,10 @@ export class AccountsFilterPipe implements PipeTransform {
             );
           });
           accounts = accounts.slice().sort((a: any, b: any) => {
-            const dateA =
-              a.timeline?.actualDisbursementDate || a.timeline?.approvedOnDate || a.timeline?.submittedOnDate;
-            const dateB =
-              b.timeline?.actualDisbursementDate || b.timeline?.approvedOnDate || b.timeline?.submittedOnDate;
-            return this.dateArrayToValue(dateB) - this.dateArrayToValue(dateA);
+            const dateDiff =
+              this.dateArrayToValue(b.timeline?.actualDisbursementDate) -
+              this.dateArrayToValue(a.timeline?.actualDisbursementDate);
+            return dateDiff !== 0 ? dateDiff : b.id - a.id;
           });
         }
       }
