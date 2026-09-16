@@ -2,13 +2,6 @@ import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({ name: 'accountsFilter' })
 export class AccountsFilterPipe implements PipeTransform {
-  private dateArrayToValue(dateArr: number[]): number {
-    if (!dateArr || dateArr.length < 3) {
-      return 0;
-    }
-    return dateArr[0] * 10000 + dateArr[1] * 100 + dateArr[2];
-  }
-
   transform(accounts: any, type: any, status: any, checkSavings: any): any {
     if (accounts) {
       if (type === 'loan') {
@@ -22,9 +15,6 @@ export class AccountsFilterPipe implements PipeTransform {
               account.status.code === 'loanStatusType.rejected'
             );
           });
-          accounts = accounts.slice().sort((a: any, b: any) => {
-            return this.dateArrayToValue(b.timeline?.closedOnDate) - this.dateArrayToValue(a.timeline?.closedOnDate);
-          });
         } else {
           accounts = accounts.filter((account: any) => {
             return (
@@ -34,12 +24,6 @@ export class AccountsFilterPipe implements PipeTransform {
               account.status.code !== 'loanStatusType.withdrawn.by.client' &&
               account.status.code !== 'loanStatusType.rejected'
             );
-          });
-          accounts = accounts.slice().sort((a: any, b: any) => {
-            const dateDiff =
-              this.dateArrayToValue(b.timeline?.actualDisbursementDate) -
-              this.dateArrayToValue(a.timeline?.actualDisbursementDate);
-            return dateDiff !== 0 ? dateDiff : b.id - a.id;
           });
         }
       }
