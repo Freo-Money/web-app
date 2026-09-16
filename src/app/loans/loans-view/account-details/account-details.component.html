@@ -48,6 +48,14 @@
       </span>
     </div>
 
+    <div class="flex-fill layout-row" *ngIf="loanDetails.termFrequency && loanDetails.termPeriodFrequencyType">
+      <span class="flex-50">{{ 'labels.inputs.Tenure' | translate }}</span>
+      <span class="flex-50"
+        >{{ loanDetails.termFrequency }}
+        {{ loanDetails.termPeriodFrequencyType.value | translateKey: 'catalogs' }}</span
+      >
+    </div>
+
     <div class="flex-fill layout-row" *ngIf="loanDetails.fixedLength">
       <span class="flex-50"> {{ 'labels.inputs.Fixed Length' | translate }} </span>
       <span class="flex-50">
